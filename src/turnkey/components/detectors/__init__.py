@@ -6,7 +6,10 @@ from turnkey.components.detectors.base import Detector
 from turnkey.components.detectors.gradsafe import GradSafeDetector
 from turnkey.components.detectors.jailguard import JailGuardDetector
 from turnkey.components.detectors.keyword import KeywordDetector
+from turnkey.components.detectors.llamaguard import LlamaGuardDetector
+from turnkey.components.detectors.perplexity import PerplexityDetector
 from turnkey.components.detectors.rcs import RCSDetector
+from turnkey.components.detectors.self_exam import SelfExamDetector
 from turnkey.components.detectors.smoothllm import SmoothLLMDetector
 from turnkey.registry import DETECTORS, register_detector
 
@@ -33,6 +36,16 @@ def _build_jailguard(cfg: DetectorConfig) -> Detector:
     return JailGuardDetector(**cfg.params)
 
 
+@register_detector("llamaguard")
+def _build_llamaguard(cfg: DetectorConfig) -> Detector:
+    return LlamaGuardDetector(**cfg.params)
+
+
+@register_detector("perplexity")
+def _build_perplexity(cfg: DetectorConfig) -> Detector:
+    return PerplexityDetector(**cfg.params)
+
+
 @register_detector("rcs_toy")
 def _build_rcs_toy(cfg: DetectorConfig) -> Detector:
     return _build_rcs_detector(cfg, expected_mode="toy")
@@ -41,6 +54,11 @@ def _build_rcs_toy(cfg: DetectorConfig) -> Detector:
 @register_detector("rcs")
 def _build_rcs(cfg: DetectorConfig) -> Detector:
     return _build_rcs_detector(cfg, expected_mode="paper")
+
+
+@register_detector("self_exam")
+def _build_self_exam(cfg: DetectorConfig) -> Detector:
+    return SelfExamDetector(**cfg.params)
 
 
 def _build_rcs_detector(cfg: DetectorConfig, *, expected_mode: str) -> Detector:

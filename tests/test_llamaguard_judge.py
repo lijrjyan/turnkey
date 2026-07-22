@@ -5,7 +5,7 @@ import pytest
 
 from turnkey.config import JudgeConfig
 from turnkey.components.judges import available_judges, load_judge
-from turnkey.components.judges import llamaguard
+from turnkey.components import llamaguard_runtime
 from turnkey.components.judges.llamaguard import (
     DEFAULT_MODEL_ID,
     LlamaGuardJudge,
@@ -87,24 +87,24 @@ def test_to_output_benign_unsafe_marks_harmful() -> None:
 
 
 def test_auth_token_prefers_env(monkeypatch: pytest.MonkeyPatch) -> None:
-    monkeypatch.setattr(llamaguard, "optional_hf_token", lambda token_env: "env-token")
+    monkeypatch.setattr(llamaguard_runtime, "optional_hf_token", lambda token_env: "env-token")
     assert _auth_token(token_env="HF_TOKEN", require_token=True) == "env-token"
 
 
 def test_auth_token_uses_existing_login(monkeypatch: pytest.MonkeyPatch) -> None:
-    monkeypatch.setattr(llamaguard, "optional_hf_token", lambda token_env: True)
+    monkeypatch.setattr(llamaguard_runtime, "optional_hf_token", lambda token_env: True)
     assert _auth_token(token_env="HF_TOKEN", require_token=True) is True
 
 
 def test_auth_token_missing_is_actionable(monkeypatch: pytest.MonkeyPatch) -> None:
-    monkeypatch.setattr(llamaguard, "optional_hf_token", lambda token_env: None)
+    monkeypatch.setattr(llamaguard_runtime, "optional_hf_token", lambda token_env: None)
 
     with pytest.raises(RuntimeError, match="HF_TOKEN"):
         _auth_token(token_env="HF_TOKEN", require_token=True)
 
 
 def test_auth_token_can_be_disabled_for_local_mirrors(monkeypatch: pytest.MonkeyPatch) -> None:
-    monkeypatch.setattr(llamaguard, "optional_hf_token", lambda token_env: None)
+    monkeypatch.setattr(llamaguard_runtime, "optional_hf_token", lambda token_env: None)
     assert _auth_token(token_env="HF_TOKEN", require_token=False) is None
 
 
@@ -116,7 +116,7 @@ def test_missing_hf_dependencies_are_actionable(monkeypatch: pytest.MonkeyPatch)
             raise ImportError("missing torch")
         return real_import_module(name)
 
-    monkeypatch.setattr(llamaguard.importlib, "import_module", fake_import_module)
+    monkeypatch.setattr(llamaguard_runtime.importlib, "import_module", fake_import_module)
     with pytest.raises(RuntimeError, match=r"pip install -e '\.\[hf\]'"):
         _import_hf_dependencies()
 
@@ -149,16 +149,20 @@ def test_llamaguard_passes_revision_to_model_and_tokenizer(monkeypatch: pytest.M
         device=lambda value: value,
     )
     monkeypatch.setattr(
-        llamaguard,
+        llamaguard_runtime,
         "_import_hf_dependencies",
         lambda: (fake_torch, FakeModel, FakeTokenizer),
     )
-    monkeypatch.setattr(llamaguard, "_auth_token", lambda **_kwargs: None)
+    monkeypatch.setattr(llamaguard_runtime, "_auth_token", lambda **_kwargs: None)
 
     LlamaGuardJudge(revision=revision, require_token=False)._load_model()
 
     assert calls == [
-        ("tokenizer", DEFAULT_MODEL_ID, {"revision": revision, "trust_remote_code": False, "local_files_only": False}),
+        (
+            "tokenizer",
+            DEFAULT_MODEL_ID,
+            {"revision": revision, "trust_remote_code": False, "local_files_only": False},
+        ),
         (
             "model",
             DEFAULT_MODEL_ID,
