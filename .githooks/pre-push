@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+while read -r local_ref local_sha remote_ref remote_sha; do
+  if [[ "$remote_ref" == refs/heads/* && "$remote_ref" != "refs/heads/dev" ]]; then
+    echo "Direct pushes are allowed only to dev; rejected $remote_ref." >&2
+    exit 1
+  fi
+done

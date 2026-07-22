@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+branch_name="${1:-$(git branch --show-current)}"
+
+if [[ "$branch_name" != "dev" ]]; then
+  echo "Turnkey development commits are allowed only on dev (current: ${branch_name:-detached})." >&2
+  exit 1
+fi
