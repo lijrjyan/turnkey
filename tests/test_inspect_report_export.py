@@ -143,16 +143,29 @@ def test_report_and_export_are_optional_regenerable_views(tmp_path: Path) -> Non
     run_dir = _run_smoke(tmp_path)
     report_json = tmp_path / "derived" / "report.json"
     report_md = tmp_path / "derived" / "report.md"
+    report_html = tmp_path / "derived" / "report.html"
     jsonl_path = tmp_path / "derived" / "cases.jsonl"
     csv_path = tmp_path / "derived" / "cases.csv"
 
-    report = write_run_report(run_dir, json_path=report_json, markdown_path=report_md)
+    report = write_run_report(
+        run_dir,
+        json_path=report_json,
+        markdown_path=report_md,
+        html_path=report_html,
+    )
     export_cases(run_dir, out_path=jsonl_path, output_format="jsonl")
     export_cases(run_dir, out_path=csv_path, output_format="csv")
 
     assert report["schema_version"] == "turnkey_report/v1"
     assert report["metrics"]["NSG_abs"] == 1.0
     assert report_json.is_file() and "# Turnkey Run Report" in report_md.read_text()
+    html = report_html.read_text(encoding="utf-8")
+    assert "<!doctype html>" in html
+    assert "Turnkey Run Report" in html
+    assert "Failure categories" in html
+    assert "Runtime event timeline" in html
+    assert "<details" in html
+    assert "<script" not in html
     exported = [json.loads(line) for line in jsonl_path.read_text().splitlines()]
     assert exported and {"case_id", "categories", "reference", "intervention"} <= set(exported[0])
     with csv_path.open(newline="", encoding="utf-8") as file:
@@ -161,6 +174,7 @@ def test_report_and_export_are_optional_regenerable_views(tmp_path: Path) -> Non
 
     report_json.unlink()
     report_md.unlink()
+    report_html.unlink()
     jsonl_path.unlink()
     csv_path.unlink()
     write_run_report(run_dir, json_path=report_json, markdown_path=report_md)
@@ -171,6 +185,7 @@ def test_report_and_export_are_optional_regenerable_views(tmp_path: Path) -> Non
 def test_inspect_report_export_cli(tmp_path: Path, capsys: pytest.CaptureFixture[str]) -> None:
     run_dir = _run_smoke(tmp_path)
     report_path = tmp_path / "report.json"
+    html_path = tmp_path / "report.html"
     export_path = tmp_path / "export.jsonl"
 
     assert main(["inspect", str(run_dir), "--category", "saved", "--json"]) == 0
@@ -178,6 +193,9 @@ def test_inspect_report_export_cli(tmp_path: Path, capsys: pytest.CaptureFixture
     assert inspected["count"] == 2
     assert main(["report", str(run_dir), "--json", str(report_path)]) == 0
     assert capsys.readouterr().out.strip() == str(report_path)
+    assert main(["report", str(run_dir), "--html", str(html_path)]) == 0
+    assert capsys.readouterr().out.strip() == str(html_path)
+    assert html_path.is_file()
     assert main(
         ["export", str(run_dir), "--format", "jsonl", "--out", str(export_path)]
     ) == 0

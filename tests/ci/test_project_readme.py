@@ -39,6 +39,8 @@ def test_readme_is_a_project_front_door() -> None:
         "free public index cannot read a private GitHub repository",
         "## About",
         "### Core Features",
+        "turnkey init my-detector",
+        "turnkey report outputs/<run-id> --html report.html",
         "## Quick Start",
         "## Documentation",
         "## Community & Support",

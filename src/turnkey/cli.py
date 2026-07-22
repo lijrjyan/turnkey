@@ -23,6 +23,7 @@ from turnkey.matrix import merge_matrix_results, run_matrix_plan, summarize_matr
 from turnkey.analysis.matrix_analysis import write_matrix_analysis
 from turnkey.components.detectors.rcs.text_pool import build_rcs_text_pool, parse_source_spec
 from turnkey.runner import run_eval
+from turnkey.scaffold import create_detector_project
 from turnkey.analysis.threshold_sweep import write_threshold_sweep
 from turnkey.validation import validate_cases_jsonl
 
@@ -107,6 +108,12 @@ def _cmd_run(args: argparse.Namespace) -> int:
     return 0
 
 
+def _cmd_init(args: argparse.Namespace) -> int:
+    project_dir = create_detector_project(args.path)
+    print(project_dir)
+    return 0
+
+
 def _cmd_dev(args: argparse.Namespace) -> int:
     run_dir = run_method_dev(
         args.entrypoint,
@@ -149,8 +156,13 @@ def _cmd_report(args: argparse.Namespace) -> int:
         args.run_dir,
         json_path=args.json_path,
         markdown_path=args.markdown_path,
+        html_path=args.html_path,
     )
-    paths = [path for path in (args.json_path, args.markdown_path) if path is not None]
+    paths = [
+        path
+        for path in (args.json_path, args.markdown_path, args.html_path)
+        if path is not None
+    ]
     if paths:
         for path in paths:
             print(path)
@@ -336,6 +348,10 @@ def build_parser() -> argparse.ArgumentParser:
     )
     p_run.set_defaults(func=_cmd_run)
 
+    p_init = sub.add_parser("init", help="Create a runnable external detector project")
+    p_init.add_argument("path", help="New directory to create; existing paths are never overwritten")
+    p_init.set_defaults(func=_cmd_init)
+
     p_dev = sub.add_parser("dev", help="Run a bounded smoke for an external method")
     p_dev.add_argument(
         "entrypoint",
@@ -364,6 +380,7 @@ def build_parser() -> argparse.ArgumentParser:
     p_report.add_argument("run_dir", help="Path to outputs/<run_id>")
     p_report.add_argument("--json", dest="json_path", help="Path to write report JSON")
     p_report.add_argument("--markdown", dest="markdown_path", help="Path to write report Markdown")
+    p_report.add_argument("--html", dest="html_path", help="Path to write a standalone HTML report")
     p_report.set_defaults(func=_cmd_report)
 
     p_export = sub.add_parser("export", help="Export interoperable paired case rows")

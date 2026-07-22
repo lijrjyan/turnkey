@@ -31,7 +31,17 @@ uv run turnkey inspect "$RUN_DIR" --category missed_harm
 
 If the fixture has no row in that category, try `blocked_benign`, `blocked_harm`, or inspect a specific `--case-id` from the unfiltered output.
 
-## 4. Audit independently
+## 4. Open the standalone report
+
+```bash
+uv run turnkey report "$RUN_DIR" --html report.html
+```
+
+Open `report.html` locally. It is a single file with no CDN or JavaScript. The
+case rows expand into redacted policy, request, judge, timing, cache, and
+model-forward events.
+
+## 5. Audit independently
 
 ```bash
 uv run turnkey audit "$RUN_DIR"
@@ -39,4 +49,6 @@ uv run turnkey audit "$RUN_DIR"
 
 An empty JSON list means the bundle passed the current audit checks. Audit recomputes metrics and validates redaction, identity, event relationships, and measured forward counts; it does not trust a precomputed summary.
 
-Next: [build your own detector](../guides/build-a-detector.md) or run the [quickstart notebook](../notebooks/00_quickstart.ipynb).
+Next: scaffold a detector with `uv run turnkey init my-detector`, follow
+[build your own detector](../guides/build-a-detector.md), or run the
+[quickstart notebook](../notebooks/00_quickstart.ipynb).

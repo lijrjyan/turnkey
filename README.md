@@ -39,15 +39,16 @@ not prerequisites for understanding the system.
 
 ### Core Features
 
-- **Bring your own detector:** load `path.py:build` without forking Turnkey or
-  editing a central registry.
+- **Bring your own detector:** scaffold with `turnkey init`, then load
+  `path.py:build` without forking Turnkey or editing a central registry.
 - **Compare paired paths:** evaluate the reference and intervention paths on
   the same selected and attacked input.
 - **Ask for model state:** typed providers expose prompt logprobs, hidden
   states, gradients, and other method-owned signals with cache and lifecycle
   accounting.
 - **Debug the failure:** connect a case to its policy, target, provider,
-  timing, cache, and measured-forward events.
+  timing, cache, and measured-forward events in the CLI or a standalone HTML
+  report.
 - **Audit the claim:** recompute metrics and verify redaction, source identity,
   event relationships, and public artifacts instead of trusting a summary.
 - **Start without infrastructure:** the dummy backend and fixture dataset make
@@ -84,11 +85,20 @@ Inspect one failure category and independently audit the bundle:
 ```bash
 uv run turnkey inspect outputs/<run-id> --category missed_harm
 uv run turnkey audit outputs/<run-id>
+uv run turnkey report outputs/<run-id> --html report.html
 ```
 
 An empty JSON list from `turnkey audit` means the bundle passed the current
 artifact checks. It is not a claim that a detector is scientifically validated
 or production-ready.
+
+Start an external detector without copying boilerplate by hand:
+
+```bash
+uv run turnkey init my-detector
+cd my-detector
+uv run turnkey dev ./detector.py:build --max-samples 4
+```
 
 ## Included Method Examples
 

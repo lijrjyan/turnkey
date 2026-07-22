@@ -2,6 +2,18 @@
 
 Start outside the Turnkey package. A file entrypoint gives fast iteration and records the exact source bytes used by a run.
 
+The fastest path creates a complete CPU-safe project without overwriting an
+existing directory:
+
+```bash
+uv run turnkey init my-detector
+cd my-detector
+uv run turnkey dev ./detector.py:build --max-samples 4
+```
+
+The scaffold contains `detector.py`, `run.yaml`, and a short README. Continue
+below to understand and change the generated detector.
+
 Create `my_detector.py`:
 
 ```python

@@ -15,6 +15,16 @@ Choose a `case_id`, then request the complete case view:
 uv run turnkey inspect "$RUN_DIR" --case-id <case-id> --json
 ```
 
+For a browser-readable view of the same redacted artifacts:
+
+```bash
+uv run turnkey report "$RUN_DIR" --html report.html
+```
+
+The standalone file expands each case into a runtime event timeline. It has no
+external assets or JavaScript and does not restore plaintext removed by the
+public artifact writer.
+
 ## Follow the event chain
 
 `events.jsonl` records policy spans, typed request uses, target calls, cache hits, durations, and model-forward counts. Public events identify the operation without exposing plaintext prompts.
