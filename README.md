@@ -173,10 +173,6 @@ free public index cannot read a private GitHub repository. Ask DeepWiki becomes
 active after the formal repository is public and indexed; private indexing
 requires a connected Devin account.
 
-## Star History
-
-[![Star History Chart](https://api.star-history.com/svg?repos=lijrjyan/turnkey&type=Date)](https://www.star-history.com/#lijrjyan/turnkey&Date)
-
 ## License
 
 Turnkey is licensed under the [Apache License 2.0](LICENSE). Third-party methods

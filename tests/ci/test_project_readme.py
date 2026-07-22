@@ -30,7 +30,6 @@ def test_readme_is_a_project_front_door() -> None:
         '<div align="center">',
         "Bring Your Own Detector",
         "https://pypi.org/project/turnkey/",
-        "api.star-history.com/svg?repos=lijrjyan/turnkey&type=Date",
         "https://deepwiki.com/lijrjyan/turnkey",
         "free public index cannot read a private GitHub repository",
         "## About",
@@ -39,10 +38,12 @@ def test_readme_is_a_project_front_door() -> None:
         "## Documentation",
         "## Community & Support",
         "## License",
-        "## Star History",
     )
     for fragment in required_fragments:
         assert fragment in readme
+
+    assert "Star History" not in readme
+    assert "star-history.com" not in readme
 
 
 def test_deepwiki_configuration_preserves_product_boundaries() -> None:
