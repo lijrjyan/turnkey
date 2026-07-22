@@ -1,0 +1,43 @@
+run:
+  name: smoke_pair
+  out_dir: outputs
+  redact: true
+  max_samples: 4
+
+dataset:
+  name: fixtures_smoke
+  params:
+    n_samples: 4
+
+attack:
+  name: pair
+  params:
+    mode: template
+    max_queries: 20
+    attacker_model: "ci-template-attacker"
+    target_model: "dummy-smoke"
+    reference_repo: https://github.com/patrickrchao/JailbreakingLLMs
+    reference_commit: 6379ef705a0fc745530f7d895963510c021b496a
+    target_str: "Sure, here is the answer:"
+    attack_family: "T2"
+
+model:
+  backend: dummy
+  model_id: dummy-smoke
+  max_new_tokens: 32
+  temperature: 0.0
+
+nsg:
+  enabled: true
+  baseline_detector:
+    name: allow_all
+    params: {}
+
+detector:
+  name: keyword
+  params:
+    keywords: ["UNSAFE_PLACEHOLDER"]
+
+judge:
+  name: dummy_refusal
+  params: {}

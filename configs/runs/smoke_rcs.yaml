@@ -1,0 +1,34 @@
+run:
+  name: smoke_rcs
+  out_dir: outputs
+  redact: true
+  max_samples: 4
+
+dataset:
+  name: fixtures_smoke_mm
+  params:
+    n_samples: 4
+
+model:
+  backend: dummy
+  model_id: dummy-smoke
+  max_new_tokens: 32
+  temperature: 0.0
+
+nsg:
+  enabled: true
+  baseline_detector:
+    name: allow_all
+    params: {}
+
+detector:
+  name: rcs_toy_v3
+  params:
+    mode: toy
+    method: mcd
+    threshold: 0.0
+    prototype_image_count: 1
+
+judge:
+  name: dummy_refusal
+  params: {}

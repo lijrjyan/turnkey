@@ -1,0 +1,38 @@
+run:
+  name: smoke_persona
+  out_dir: outputs
+  redact: true
+  max_samples: 4
+
+dataset:
+  name: fixtures_smoke
+  params:
+    n_samples: 4
+
+attack:
+  name: persona
+  params:
+    persona: "Helpful Teacher"
+    use_markers: true
+    attack_family: "T2"
+
+model:
+  backend: dummy
+  model_id: dummy-smoke
+  max_new_tokens: 32
+  temperature: 0.0
+
+nsg:
+  enabled: true
+  baseline_detector:
+    name: allow_all
+    params: {}
+
+detector:
+  name: keyword
+  params:
+    keywords: ["UNSAFE_PLACEHOLDER"]
+
+judge:
+  name: dummy_refusal
+  params: {}

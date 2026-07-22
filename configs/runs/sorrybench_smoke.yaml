@@ -1,0 +1,32 @@
+run:
+  name: sorrybench-smoke
+  out_dir: outputs
+  redact: true
+
+dataset:
+  name: sorrybench_public
+  params:
+    revision: c4a403cfd57373e3ac9141dad9e13b53d32f3e10
+    shuffle: false
+    limit: 4
+    split: train
+
+model:
+  backend: dummy
+  model_id: dummy-smoke
+  max_new_tokens: 32
+  temperature: 0.0
+
+nsg:
+  enabled: true
+  baseline_detector:
+    name: allow_all
+    params: {}
+
+detector:
+  name: allow_all
+  params: {}
+
+judge:
+  name: dummy_refusal
+  params: {}

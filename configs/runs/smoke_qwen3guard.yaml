@@ -1,0 +1,35 @@
+run:
+  name: smoke_qwen3guard
+  out_dir: outputs
+  redact: true
+  max_samples: 4
+
+dataset:
+  name: fixtures_smoke
+  params:
+    n_samples: 4
+
+model:
+  backend: dummy
+  model_id: dummy-smoke
+  max_new_tokens: 32
+  temperature: 0.0
+
+nsg:
+  enabled: true
+  baseline_detector:
+    name: allow_all
+    params: {}
+
+detector:
+  name: keyword
+  params:
+    keywords: ["UNSAFE_PLACEHOLDER"]
+
+judge:
+  name: qwen3guard
+  params:
+    model_size: "0.6B"  # Use smallest model for faster testing
+    revision: fada3b2f655b89601929198343c94cd2f64d93cc
+    device: "cuda"
+    torch_dtype: "auto"

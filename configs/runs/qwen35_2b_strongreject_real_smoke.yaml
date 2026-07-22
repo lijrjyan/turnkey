@@ -1,0 +1,50 @@
+run:
+  name: qwen35-2b-strongreject-real-smoke
+  out_dir: outputs/debug
+  redact: true
+  max_samples: 4
+
+dataset:
+  name: fixtures_smoke
+  params:
+    n_samples: 4
+
+content:
+  shuffle: false
+
+model:
+  backend: hf
+  model_id: Qwen/Qwen3.5-2B
+  revision: 15852e8c16360a2fea060d615a32b45270f8a8fc
+  device: cuda
+  trust_remote_code: false
+  max_new_tokens: 24
+  temperature: 0.0
+
+attack:
+  name: none
+  params: {}
+
+nsg:
+  enabled: true
+  baseline_detector:
+    name: allow_all_v3
+    params: {}
+
+detector:
+  name: allow_all_v3
+  params: {}
+
+judge:
+  name: strongreject
+  params:
+    evaluator: strongreject_finetuned
+    threshold: 0.5
+    adapter_revision: 4bd893d32390d2cace4f067dc2e3ef5294fd78a2
+    base_model_revision: 9cf48e52b224239de00d483ec8eb84fb8d0f3a3a
+    strong_reject_path: references/repos/strong_reject
+    reference_repo: https://github.com/dsbowen/strong_reject
+    reference_commit: 7a551d5b440ec7b75d4f6f5bb7c1719965b76b47
+
+naturalness:
+  enabled: false

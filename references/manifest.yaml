@@ -1,0 +1,248 @@
+version: 1
+
+papers:
+  - id: jailbreakbench_2404_01318
+    title: "JailbreakBench: An Open Robustness Benchmark for Jailbreaking Large Language Models"
+    url: "https://arxiv.org/pdf/2404.01318.pdf"
+    path: "papers/2404.01318_JailbreakBench.pdf"
+  - id: harmbench_2402_04249
+    title: "HarmBench: A Standardized Evaluation Framework for Automated Red Teaming and Robust Refusal"
+    url: "https://arxiv.org/pdf/2402.04249.pdf"
+    path: "papers/2402.04249_HarmBench.pdf"
+  - id: sorrybench_2406_14598
+    title: "SORRY-Bench: Systematically Evaluating Large Language Model Safety Refusal Behaviors"
+    url: "https://arxiv.org/pdf/2406.14598.pdf"
+    path: "papers/2406.14598_SORRY-Bench.pdf"
+  - id: strongreject_2402_10260
+    title: "A STRONGREJECT for Empty Jailbreaks"
+    url: "https://arxiv.org/pdf/2402.10260.pdf"
+    path: "papers/2402.10260_STRONGREJECT.pdf"
+  - id: gcg_2307_15043
+    title: "Universal and Transferable Adversarial Attacks on Aligned Language Models (GCG)"
+    url: "https://arxiv.org/pdf/2307.15043.pdf"
+    path: "papers/2307.15043_GCG.pdf"
+  - id: pair_2310_08419
+    title: "Jailbreaking Black Box LLMs in Twenty Queries (PAIR)"
+    url: "https://arxiv.org/pdf/2310.08419.pdf"
+    path: "papers/2310.08419_PAIR.pdf"
+  - id: tap_2312_02119
+    title: "Tree of Attacks with Pruning (TAP)"
+    url: "https://arxiv.org/pdf/2312.02119.pdf"
+    path: "papers/2312.02119_TAP.pdf"
+  - id: crescendo_2404_01833
+    title: "The Crescendo Multi-Turn LLM Jailbreak Attack"
+    url: "https://arxiv.org/pdf/2404.01833.pdf"
+    path: "papers/2404.01833_Crescendo.pdf"
+  - id: manyshot_neurips2024
+    title: "Many-shot Jailbreaking (NeurIPS 2024)"
+    url: "https://proceedings.neurips.cc/paper_files/paper/2024/file/ea456e232efb72d261715e33ce25f208-Paper-Conference.pdf"
+    path: "papers/NeurIPS2024_Many-shot_Jailbreaking.pdf"
+  - id: deepinception_2311_03191
+    title: "DeepInception: Hypnotize Large Language Model to Be Jailbreaker"
+    url: "https://arxiv.org/pdf/2311.03191.pdf"
+    path: "papers/2311.03191_DeepInception.pdf"
+  - id: persona_modulation_2311_03348
+    title: "Scalable and Transferable Black-Box Jailbreaks for Language Models via Persona Modulation"
+    url: "https://arxiv.org/pdf/2311.03348.pdf"
+    path: "papers/2311.03348_Persona_Modulation.pdf"
+  - id: artprompt_2402_11753
+    title: "ArtPrompt: ASCII Art-based Jailbreak Attacks against Aligned LLMs"
+    url: "https://arxiv.org/pdf/2402.11753.pdf"
+    path: "papers/2402.11753_ArtPrompt.pdf"
+  - id: flipattack_2410_02832
+    title: "FlipAttack: Jailbreak LLMs via Flipping"
+    url: "https://arxiv.org/pdf/2410.02832.pdf"
+    path: "papers/2410.02832_FlipAttack.pdf"
+  - id: llmfuzzer_usenixsec2024
+    title: "LLM-Fuzzer: Scaling Assessment of Large Language Model Jailbreaks (USENIX Security 2024)"
+    url: "https://www.usenix.org/system/files/usenixsecurity24-yu-jiahao.pdf"
+    path: "papers/USENIXSec2024_LLM-Fuzzer.pdf"
+  - id: visual_adv_2306_13213
+    title: "Visual Adversarial Examples Jailbreak Aligned Large Language Models"
+    url: "https://arxiv.org/pdf/2306.13213.pdf"
+    path: "papers/2306.13213_Visual_Adversarial_Examples.pdf"
+  - id: indirect_injection_2307_10490
+    title: "Abusing Images and Sounds for Indirect Instruction Injection in Multi-Modal LLMs"
+    url: "https://arxiv.org/pdf/2307.10490.pdf"
+    path: "papers/2307.10490_Indirect_Injection.pdf"
+  - id: jailbreakv_2404_03027
+    title: "JailBreakV: A Benchmark for Assessing the Robustness of MultiModal LLMs against Jailbreak Attacks"
+    url: "https://arxiv.org/pdf/2404.03027.pdf"
+    path: "papers/2404.03027_JailBreakV.pdf"
+  - id: llamaguard_2312_06674
+    title: "Llama Guard: LLM-based Input-Output Safeguard for Human-AI Conversations"
+    url: "https://arxiv.org/pdf/2312.06674.pdf"
+    path: "papers/2312.06674_Llama_Guard.pdf"
+  - id: wildguard_2406_18495
+    title: "WildGuard: Open One-Stop Moderation Tools for Safety Risks, Jailbreaks, and Refusals of LLMs"
+    url: "https://arxiv.org/pdf/2406.18495.pdf"
+    path: "papers/2406.18495_WildGuard.pdf"
+  - id: guardsafe_2402_13494
+    title: "GradSafe: Detecting Jailbreak Prompts for LLMs via Safety-Critical Gradient Analysis"
+    url: "https://arxiv.org/pdf/2402.13494.pdf"
+    path: "papers/2402.13494_GradSafe.pdf"
+  - id: jailguard_2312_10766
+    title: "JailGuard: A Universal Detection Framework for LLM Prompt-based Attacks"
+    url: "https://arxiv.org/pdf/2312.10766.pdf"
+    path: "papers/2312.10766_JailGuard.pdf"
+  - id: fjd_2509_14558
+    title: "LLM Jailbreak Detection for (Almost) Free!"
+    url: "https://arxiv.org/pdf/2509.14558.pdf"
+    path: "papers/2509.14558_FJD.pdf"
+  - id: guardreasoner_2501_18492
+    title: "GuardReasoner: Towards Reasoning-based LLM Safeguards"
+    url: "https://arxiv.org/pdf/2501.18492.pdf"
+    path: "papers/2501.18492_GuardReasoner.pdf"
+  - id: qwen3guard_2510_14276
+    title: "Qwen3Guard Technical Report"
+    url: "https://arxiv.org/pdf/2510.14276.pdf"
+    path: "papers/2510.14276_Qwen3Guard.pdf"
+  - id: prefix_probing_2512_16650
+    title: "Prefix Probing: Lightweight Harmful Content Detection for Large Language Models"
+    url: "https://arxiv.org/pdf/2512.16650.pdf"
+    path: "papers/2512.16650_Prefix_Probing.pdf"
+  - id: smoothllm_2310_03684
+    title: "SmoothLLM: Defending Large Language Models Against Jailbreaking Attacks"
+    url: "https://arxiv.org/pdf/2310.03684.pdf"
+    path: "papers/2310.03684_SmoothLLM.pdf"
+  - id: erase_check_2309_02705
+    title: "Certifying LLM Safety against Adversarial Prompting (Erase-and-Check)"
+    url: "https://arxiv.org/pdf/2309.02705.pdf"
+    path: "papers/2309.02705_Erase-and-Check.pdf"
+  - id: threat_model_2410_16222
+    title: "A Realistic Threat Model for Large Language Model Jailbreaks"
+    url: "https://arxiv.org/pdf/2410.16222.pdf"
+    path: "papers/2410.16222_Threat_Model.pdf"
+  - id: adashield_2403_09513
+    title: "AdaShield: Safeguarding Multimodal Large Language Models from Structure-based Attack via Adaptive Shield Prompting"
+    url: "https://arxiv.org/pdf/2403.09513.pdf"
+    path: "papers/2403.09513_AdaShield.pdf"
+  - id: figstep_aaai2025
+    title: "FigStep: Jailbreaking Large Vision-Language Models via Typographic Prompts (AAAI 2025)"
+    url: "https://ojs.aaai.org/index.php/AAAI/article/download/34568/36723"
+    path: "papers/AAAI2025_FigStep.pdf"
+  - id: agent_smith_2402_08567
+    title: "Agent Smith: A Single Image Can Jailbreak One Million Multimodal LLM Agents Exponentially Fast"
+    url: "https://arxiv.org/pdf/2402.08567.pdf"
+    path: "papers/2402.08567_Agent_Smith.pdf"
+  - id: prisonbreak_2412_07192
+    title: "PrisonBreak: Jailbreaking Large Language Models with Fewer Than Twenty-Five Targeted Bit-flips"
+    url: "https://arxiv.org/pdf/2412.07192.pdf"
+    path: "papers/2412.07192_PrisonBreak.pdf"
+
+repos:
+  - id: llm_attacks
+    url: "https://github.com/llm-attacks/llm-attacks.git"
+    path: "repos/llm-attacks"
+    depth: 1
+    commit: "098262edf85f807224e70ecd87b9d83716bf6b73"
+  - id: jailbreak_llms_pair
+    url: "https://github.com/patrickrchao/JailbreakingLLMs.git"
+    path: "repos/JailbreakingLLMs"
+    depth: 1
+    commit: "6379ef705a0fc745530f7d895963510c021b496a"
+  - id: tap
+    url: "https://github.com/RICommunity/TAP.git"
+    path: "repos/TAP"
+    depth: 1
+    commit: "7bcdad30537c679d00699fac16052dc916c89a6d"
+  - id: deepinception
+    url: "https://github.com/tmlr-group/DeepInception.git"
+    path: "repos/DeepInception"
+    depth: 1
+    commit: "fc5689e76c4dd87a14babf1eadf890532f2b6880"
+  - id: artprompt
+    url: "https://github.com/uw-nsl/ArtPrompt.git"
+    path: "repos/ArtPrompt"
+    depth: 1
+    commit: "6eb866446b7648ccee705bd802fe3ae8694ffc12"
+  - id: flipattack
+    url: "https://github.com/yueliu1999/FlipAttack.git"
+    path: "repos/FlipAttack"
+    depth: 1
+    commit: "04627cf0e20f6adcdd4f3e6d11e910aa79309a9a"
+  - id: gptfuzz_llm_fuzzer
+    url: "https://github.com/sherdencooper/GPTFuzz.git"
+    path: "repos/GPTFuzz"
+    depth: 1
+    commit: "0c26cccc3b19cd5eed91d6cb6912431cf2501762"
+  - id: visual_adv_jailbreak
+    url: "https://github.com/Unispac/Visual-Adversarial-Examples-Jailbreak-Large-Language-Models.git"
+    path: "repos/Visual-Adversarial-Examples-Jailbreak-Large-Language-Models"
+    depth: 1
+    commit: "5fc9883cfa9b4183cf05c6eceef49e449e45e9c9"
+  - id: figstep
+    url: "https://github.com/CryptoAILab/FigStep.git"
+    path: "repos/FigStep"
+    depth: 1
+    commit: "0861b17b3d67887c06ee3534ec65b3012f9becb7"
+  - id: agent_smith
+    url: "https://github.com/sail-sg/Agent-Smith.git"
+    path: "repos/Agent-Smith"
+    depth: 1
+    commit: "3e19605cbf05067b923b07f1f594f2505cbddcd3"
+  - id: strongreject
+    url: "https://github.com/alexandrasouly/strongreject.git"
+    path: "repos/strongreject"
+    depth: 1
+    commit: "f7cad6c17e624e21d8df2278e918ae1dddb4cb56"
+  - id: strong_reject
+    url: "https://github.com/dsbowen/strong_reject.git"
+    path: "repos/strong_reject"
+    depth: 1
+    commit: "7a551d5b440ec7b75d4f6f5bb7c1719965b76b47"
+  - id: gradsafe
+    url: "https://github.com/xyq7/GradSafe.git"
+    path: "repos/GradSafe"
+    depth: 1
+    commit: "2a8b6edd213ed8931b300f7270887227a8e880be"
+  - id: jailguard
+    url: "https://github.com/shiningrain/JailGuard.git"
+    path: "repos/JailGuard"
+    depth: 1
+    commit: "419e1d3d08f4d02998a11a687f925518d2d5dd0c"
+  - id: smooth_llm
+    url: "https://github.com/arobey1/smooth-llm.git"
+    path: "repos/smooth-llm"
+    depth: 1
+    commit: "1855c8791d4ffbcd902abcdd1b5ef69fda1a96e0"
+  - id: certified_llm_safety
+    url: "https://github.com/aounon/certified-llm-safety.git"
+    path: "repos/certified-llm-safety"
+    depth: 1
+    commit: "585385ae21fc4cc4f48d2c54180a72f92fdd292f"
+  - id: llm_threat_model
+    url: "https://github.com/valentyn1boreiko/llm-threat-model.git"
+    path: "repos/llm-threat-model"
+    depth: 1
+    commit: "ab775a74627469346d08d6cba88a6f48c1017824"
+  - id: adashield
+    url: "https://github.com/rain305f/adashield.git"
+    path: "repos/adashield"
+    depth: 1
+    commit: "b6d02c6747bd6984a99ee2e1db1e52736a6a05cc"
+  - id: guardreasoner
+    url: "https://github.com/yueliu1999/GuardReasoner.git"
+    path: "repos/GuardReasoner"
+    depth: 1
+    commit: "bb7e686dc0535884d6994de5f950a072772e7fe2"
+  - id: qwen3guard
+    url: "https://github.com/QwenLM/Qwen3Guard.git"
+    path: "repos/Qwen3Guard"
+    depth: 1
+    commit: "6a52eca94b3d2aedb8aebd36baa353828d4166f1"
+  - id: wildguard_github
+    url: "https://github.com/allenai/wildguard.git"
+    path: "repos/wildguard"
+    depth: 1
+    commit: "495b9dc837be594c6c5665b0f7f56169baf0d5be"
+  - id: vllm
+    url: "https://github.com/vllm-project/vllm.git"
+    path: "repos/vllm"
+    depth: 1
+    commit: "5dc3538736e40428d388f6980025340f4f7524af"
+  - id: sglang
+    url: "https://github.com/sgl-project/sglang.git"
+    path: "repos/sglang"
+    depth: 1
+    commit: "17119a697de72910d77d3bfffc34d097cf6cad09"

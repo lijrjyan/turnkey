@@ -1,0 +1,32 @@
+run:
+  name: jbb-smoke
+  out_dir: outputs
+  redact: true
+
+dataset:
+  name: jbb_behaviors
+  params:
+    revision: 886acc352a31533ffbcf4ef22c744658688086fc
+    shuffle: false
+    harmful_limit: 2
+    benign_limit: 2
+
+model:
+  backend: dummy
+  model_id: dummy-smoke
+  max_new_tokens: 32
+  temperature: 0.0
+
+nsg:
+  enabled: true
+  baseline_detector:
+    name: allow_all
+    params: {}
+
+detector:
+  name: allow_all
+  params: {}
+
+judge:
+  name: dummy_refusal
+  params: {}

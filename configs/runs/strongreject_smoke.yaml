@@ -1,0 +1,37 @@
+run:
+  name: strongreject-smoke
+  out_dir: outputs
+  redact: true
+  max_samples: 4
+
+dataset:
+  name: fixtures_smoke
+  params:
+    n_samples: 4
+
+model:
+  backend: dummy
+  model_id: dummy-smoke
+  max_new_tokens: 32
+  temperature: 0.0
+
+nsg:
+  enabled: true
+  baseline_detector:
+    name: allow_all
+    params: {}
+
+detector:
+  name: allow_all
+  params: {}
+
+judge:
+  name: strongreject
+  params:
+    evaluator: strongreject_finetuned
+    threshold: 0.5
+    adapter_revision: 4bd893d32390d2cace4f067dc2e3ef5294fd78a2
+    base_model_revision: 9cf48e52b224239de00d483ec8eb84fb8d0f3a3a
+    testing_model_revision: cf967c0a9a04383db6f7b1108d86b2962634b4ac
+    testing_mode: true
+    strong_reject_path: references/repos/strong_reject

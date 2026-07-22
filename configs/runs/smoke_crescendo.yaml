@@ -1,0 +1,42 @@
+run:
+  name: smoke_crescendo
+  out_dir: outputs
+  redact: true
+  max_samples: 4
+
+dataset:
+  name: fixtures_smoke
+  params:
+    n_samples: 4
+
+attack:
+  name: crescendo
+  params:
+    mode: template
+    topic: "the water cycle"
+    user_tag: "A:"
+    assistant_tag: "Model:"
+    include_stub_responses: true
+    include_final_assistant_tag: true
+    attack_family: "T2"
+
+model:
+  backend: dummy
+  model_id: dummy-smoke
+  max_new_tokens: 32
+  temperature: 0.0
+
+nsg:
+  enabled: true
+  baseline_detector:
+    name: allow_all
+    params: {}
+
+detector:
+  name: keyword
+  params:
+    keywords: ["UNSAFE_PLACEHOLDER"]
+
+judge:
+  name: dummy_refusal
+  params: {}

@@ -1,0 +1,347 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: ci-${{ github.event_name }}-${{ github.head_ref || github.ref_name }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  changes:
+    if: github.event_name != 'schedule'
+    runs-on: ubuntu-latest
+    outputs:
+      detector_rcs: ${{ steps.filter.outputs.detector_rcs }}
+      detector_gradsafe: ${{ steps.filter.outputs.detector_gradsafe }}
+      detector_jailguard: ${{ steps.filter.outputs.detector_jailguard }}
+      attacks: ${{ steps.filter.outputs.attacks }}
+      datasets: ${{ steps.filter.outputs.datasets }}
+      judges: ${{ steps.filter.outputs.judges }}
+      backends: ${{ steps.filter.outputs.backends }}
+      matrix: ${{ steps.filter.outputs.matrix }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dorny/paths-filter@v3
+        id: filter
+        with:
+          filters: |
+            detector_rcs:
+              - "src/turnkey/components/detectors/rcs/**"
+              - "src/turnkey/components/detectors/__init__.py"
+              - "src/turnkey/components/detectors/base.py"
+              - "src/turnkey/runner/run.py"
+              - "configs/runs/smoke_rcs*.yaml"
+            detector_gradsafe:
+              - "src/turnkey/components/detectors/gradsafe.py"
+              - "src/turnkey/components/detectors/__init__.py"
+              - "src/turnkey/components/detectors/base.py"
+              - "src/turnkey/runner/run.py"
+              - "configs/runs/smoke_gradsafe.yaml"
+            detector_jailguard:
+              - "src/turnkey/components/detectors/jailguard.py"
+              - "src/turnkey/components/detectors/jailguard/**"
+              - "src/turnkey/components/detectors/__init__.py"
+              - "src/turnkey/components/detectors/base.py"
+              - "src/turnkey/runner/run.py"
+              - "configs/runs/smoke_jailguard.yaml"
+              - "configs/runs/jailguard_paper_openai.yaml"
+            attacks:
+              - "src/turnkey/components/attacks/**"
+              - "configs/runs/smoke_pair.yaml"
+              - "configs/runs/smoke_persona.yaml"
+            datasets:
+              - "src/turnkey/components/datasets/**"
+              - "configs/runs/*smoke.yaml"
+            judges:
+              - "src/turnkey/components/judges/**"
+              - "configs/runs/smoke_*guard*.yaml"
+              - "configs/runs/strongreject_smoke.yaml"
+            backends:
+              - "src/turnkey/components/backends/**"
+              - "src/turnkey/runtime_providers/**"
+              - "src/turnkey/methods.py"
+              - "src/turnkey/policy.py"
+              - "src/turnkey/runtime_events.py"
+              - "src/turnkey/runner/policy_executor.py"
+              - "src/turnkey/runner/run.py"
+              - "configs/runs/smoke_openai_compat.yaml"
+            matrix:
+              - "src/turnkey/matrix/**"
+              - "src/turnkey/analysis/matrix*.py"
+              - "configs/matrix/**"
+
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install uv
+        uses: astral-sh/setup-uv@v3
+        with:
+          version: "0.9.9"
+          enable-cache: true
+      - name: Install dependencies
+        run: uv sync --frozen --extra dev
+      - name: Lint
+        run: uv run make lint
+
+  unit-fast:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install uv
+        uses: astral-sh/setup-uv@v3
+        with:
+          version: "0.9.9"
+          enable-cache: true
+      - name: Install dependencies
+        run: uv sync --frozen --extra dev
+      - name: Fast unit tests
+        run: uv run pytest -q -m "not slow and not gpu"
+
+  learning-site:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install uv
+        uses: astral-sh/setup-uv@v3
+        with:
+          version: "0.9.9"
+          enable-cache: true
+      - name: Install documentation dependencies
+        run: uv sync --frozen --extra dev --extra docs
+      - name: Execute CPU-safe notebooks
+        run: uv run python scripts/ci/run_notebooks.py
+      - name: Build documentation
+        run: uv run mkdocs build --strict
+
+  package:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install uv
+        uses: astral-sh/setup-uv@v3
+        with:
+          version: "0.9.9"
+          enable-cache: true
+      - name: Build distributions
+        run: uv build
+
+  architecture-contracts:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install uv
+        uses: astral-sh/setup-uv@v3
+        with:
+          version: "0.9.9"
+          enable-cache: true
+      - name: Install dependencies
+        run: uv sync --frozen --extra dev
+      - name: Detector and provider contracts
+        run: >-
+          uv run pytest -q
+          tests/test_minimal_runtime_contracts.py
+          tests/test_runner_model_signals.py
+          tests/test_detector_signals.py
+          tests/test_pipeline_consistency.py
+          tests/test_core_run_artifacts.py
+          tests/test_core_run_audit.py
+          tests/test_run_metadata.py
+          tests/test_inspect_report_export.py
+          tests/test_cache_manifest.py
+          tests/test_detector_calibrate_cli.py
+          tests/ci/test_conformance_architecture.py
+          tests/ci/test_run_trace_smoke.py
+
+  trace-smoke-audit:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        config:
+          - configs/runs/smoke.yaml
+          - configs/runs/smoke_pair.yaml
+          - configs/runs/smoke_jailguard.yaml
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install uv
+        uses: astral-sh/setup-uv@v3
+        with:
+          version: "0.9.9"
+          enable-cache: true
+      - name: Install dependencies
+        run: uv sync --frozen --extra dev
+      - name: Run trace smoke + validate + audit
+        run: >-
+          uv run python scripts/ci/run_trace_smoke.py
+          --config "${{ matrix.config }}"
+          --out-root outputs/ci-trace-smoke
+
+  matrix-plan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install uv
+        uses: astral-sh/setup-uv@v3
+        with:
+          version: "0.9.9"
+          enable-cache: true
+      - name: Install dependencies
+        run: uv sync --frozen --extra dev
+      - name: Matrix plan regression checks
+        run: uv run python scripts/ci/check_matrix_plan.py --out-root outputs/ci-matrix-plan
+
+  openai-compat-fake:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install uv
+        uses: astral-sh/setup-uv@v3
+        with:
+          version: "0.9.9"
+          enable-cache: true
+      - name: Install dependencies
+        run: uv sync --frozen --extra dev
+      - name: Start fake OpenAI-compatible server
+        run: |
+          uv run python scripts/ci/fake_openai_compat_server.py --host 127.0.0.1 --port 8765 > fake-openai.log 2>&1 &
+          echo $! > fake-openai.pid
+          python - <<'PY'
+          import json
+          import time
+          import urllib.request
+
+          for _ in range(50):
+              try:
+                  with urllib.request.urlopen("http://127.0.0.1:8765/health", timeout=1) as response:
+                      payload = json.loads(response.read().decode("utf-8"))
+                  if payload.get("status") == "ok":
+                      raise SystemExit(0)
+              except Exception:
+                  time.sleep(0.1)
+          raise SystemExit("fake OpenAI-compatible server did not become healthy")
+          PY
+      - name: Run OpenAI-compatible smoke against fake server
+        run: >-
+          uv run python scripts/ci/run_trace_smoke.py
+          --config configs/runs/smoke_openai_compat.yaml
+          --out-root outputs/ci-openai-compat
+          --model-base-url http://127.0.0.1:8765
+      - name: Stop fake OpenAI-compatible server
+        if: always()
+        run: |
+          if [ -f fake-openai.pid ]; then
+            kill "$(cat fake-openai.pid)" || true
+          fi
+
+  targeted-smokes:
+    if: github.event_name != 'schedule'
+    needs: changes
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install uv
+        uses: astral-sh/setup-uv@v3
+        with:
+          version: "0.9.9"
+          enable-cache: true
+      - name: Install dependencies
+        run: uv sync --frozen --extra dev
+      - name: RCS smoke
+        if: needs.changes.outputs.detector_rcs == 'true'
+        run: >-
+          uv run python scripts/ci/run_trace_smoke.py
+          --config configs/runs/smoke_rcs.yaml
+          --out-root outputs/ci-targeted
+      - name: GradSafe smoke
+        if: needs.changes.outputs.detector_gradsafe == 'true'
+        run: >-
+          uv run pytest -q
+          tests/test_gradsafe_detector.py::test_gradsafe_policy_run_records_gradient_provider_and_audits
+      - name: JailGuard smoke
+        if: needs.changes.outputs.detector_jailguard == 'true'
+        run: >-
+          uv run python scripts/ci/run_trace_smoke.py
+          --config configs/runs/smoke_jailguard.yaml
+          --out-root outputs/ci-targeted
+      - name: Attack smoke subset
+        if: needs.changes.outputs.attacks == 'true'
+        run: >-
+          uv run python scripts/ci/run_trace_smoke.py
+          --config configs/runs/smoke_persona.yaml
+          --config configs/runs/smoke_pair.yaml
+          --out-root outputs/ci-targeted
+      - name: Dataset smoke subset
+        if: needs.changes.outputs.datasets == 'true'
+        run: >-
+          uv run python scripts/ci/run_trace_smoke.py
+          --config configs/runs/xstest_smoke.yaml
+          --out-root outputs/ci-targeted
+      - name: Judge contract tests
+        if: needs.changes.outputs.judges == 'true'
+        run: >-
+          uv run pytest -q
+          tests/test_guardreasoner_judge.py
+          tests/test_llamaguard_judge.py
+          tests/test_qwen3guard_judge.py
+          tests/test_smoothllm_judge.py
+          tests/test_strongreject_judge.py
+          tests/test_wildguard_judge.py
+      - name: Backend and provider tests
+        if: needs.changes.outputs.backends == 'true'
+        run: >-
+          uv run pytest -q
+          tests/test_hf_compat.py
+          tests/test_prompt_logprobs.py
+          tests/test_runner_model_signals.py
+          tests/test_hidden_state_provider.py
+      - name: Matrix tests
+        if: needs.changes.outputs.matrix == 'true'
+        run: >-
+          uv run pytest -q tests/test_matrix_plan.py tests/test_matrix_analysis.py
+
+  nightly-hf:
+    if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install uv
+        uses: astral-sh/setup-uv@v3
+        with:
+          version: "0.9.9"
+          enable-cache: true
+      - name: Install optional dependencies
+        run: uv sync --frozen --extra dev --extra hf --extra judges
+      - name: Optional-dependency CPU contract tests
+        run: >-
+          uv run pytest -q
+          tests/test_hf_compat.py
+          tests/test_hidden_state_provider.py
+          tests/test_gradsafe_detector.py
+      - name: Offline small-model smoke when cache is available
+        env:
+          HF_HUB_OFFLINE: "1"
+        run: |
+          MODEL_CACHE="${HF_HOME:-$HOME/.cache/huggingface}/hub/models--Qwen--Qwen3-0.6B"
+          if [ ! -d "$MODEL_CACHE" ]; then
+            echo "Skipping offline HF smoke; cache not found at $MODEL_CACHE" | tee -a "$GITHUB_STEP_SUMMARY"
+            exit 0
+          fi
+          uv run python scripts/ci/run_trace_smoke.py \
+            --config configs/runs/qwen3_0_6b_pipeline_smoke.yaml \
+            --out-root outputs/ci-nightly-hf
+      - name: Upload nightly reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: nightly-hf-reports
+          path: |
+            outputs/ci-nightly-hf/**/run.json
+            outputs/ci-nightly-hf/**/cases.jsonl
+            outputs/ci-nightly-hf/**/events.jsonl
+            outputs/ci-nightly-hf/**/metrics.json
+          if-no-files-found: ignore

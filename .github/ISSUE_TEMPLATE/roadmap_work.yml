@@ -1,0 +1,72 @@
+name: Tracking Issue
+description: Create a roadmap track, standalone backlog, or independently owned child. Ordinary implementation slices do not need issues.
+title: "<area>: <short task in lowercase prose, proper nouns kept>"
+labels: []
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Find the active parent (only if this is a roadmap-track) by listing open issues and selecting the one labeled `roadmap`:
+        `gh issue list --state open --json number,title,labels,url | jq '.[] | select(any(.labels[]?; .name == "roadmap"))'`
+
+        Pick the **issue shape** before filling out the form:
+        - **roadmap-track**: a phase-sized stream. Set `Links → Parent roadmap: #<active>`, add an internal checklist, and link as a native sub-issue. Commits and branches implement the track directly.
+        - **standalone backlog**: recognized future work, not yet phase-active. Set `Links → Standalone backlog; not yet attached to a roadmap.` No `roadmap` label.
+        - **independent child**: separately owned or deferred acceptance that cannot stay inside a track checklist. Set `Links → Parent track: #<track>` and link as a native sub-issue.
+        - **skip the issue**: an ordinary implementation slice belongs in a direct commit on `dev` or a topic branch. Open a PR only when explicitly requested.
+
+        Keep the issue high-level: goal, scope, acceptance milestones, verification, and links.
+        Persist detailed design, findings, and progress in the local planning files described by `AGENTS.md`.
+        Use native sub-issues only for genuinely separate tracks or ownership, not ordinary implementation slices.
+  - type: textarea
+    id: goal
+    attributes:
+      label: Goal
+      description: Outcome in ≤ 3 lines.
+    validations:
+      required: true
+  - type: textarea
+    id: scope
+    attributes:
+      label: Scope
+      description: Files, modules, or behavior included.
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance
+      description: Concrete pass/fail checks. Use a task list.
+      value: |
+        Work checklist:
+
+        - [ ] <deliverable 1>
+        - [ ] <deliverable 2>
+
+        Completion criteria:
+
+        - [ ] <criterion 1>
+        - [ ] <criterion 2>
+    validations:
+      required: true
+  - type: textarea
+    id: verification
+    attributes:
+      label: Verification
+      description: Commands or CI checks required for completion.
+      value: |
+        - `uv run make test`
+        - `uv run make lint`
+    validations:
+      required: true
+  - type: textarea
+    id: links
+    attributes:
+      label: Links
+      description: State the issue shape and either its parent or standalone status. Annotate referenced issue state.
+      value: |
+        - Issue shape: <roadmap-track | standalone backlog | independent child>
+        - Parent: #<roadmap-or-track> (open), or `Standalone backlog; not yet attached to a roadmap.`
+        - Native sub-issue of: #<parent> (attached issues only)
+    validations:
+      required: true
