@@ -6,6 +6,7 @@ from turnkey.components.backends.base import LLMBackend
 from turnkey.config import Config
 from turnkey.methods import MethodContext, RequestUse, _attach_secondary_failure
 from turnkey.policy import Component, Generate, Outcome, PolicyChain, PolicyRequest, TargetSession
+from turnkey.runtime_providers import PromptLogprobsProvider
 from turnkey.runtime_events import EventRecorder, RuntimeEvent
 from turnkey.schema import DetectorDecision, JudgeOutput, ModelOutput, Record, Sample
 from turnkey.signals import SignalBundle, materialize_signals, signal_request_from_model_config
@@ -90,7 +91,13 @@ def run_policy_pair(
     release_target_before_intervention: Callable[[], None] | None = None,
 ) -> PolicyPairResult:
     target_provider = BackendGenerateProvider(backend)
-    providers = (target_provider, *reference.providers, *intervention.providers)
+    prompt_logprobs_provider = PromptLogprobsProvider(backend)
+    providers = (
+        target_provider,
+        prompt_logprobs_provider,
+        *reference.providers,
+        *intervention.providers,
+    )
     reference_chain = PolicyChain((reference.policy,))
     intervention_chain = PolicyChain((intervention.policy,))
     reference_records: list[Record] = []
@@ -104,14 +111,6 @@ def run_policy_pair(
         with MethodContext(providers, event_recorder=event_recorder) as context:
             target = TargetSession(context)
             for sample in samples:
-                signals = materialize_signals(
-                    sample=sample,
-                    backend=backend,
-                    request=signal_request_from_model_config(
-                        return_prompt_logprobs=cfg.model.return_prompt_logprobs,
-                        prefix_logprob_text=cfg.model.prefix_logprob_text,
-                    ),
-                )
                 request = PolicyRequest(
                     sample=sample,
                     target=Generate(
@@ -121,7 +120,6 @@ def run_policy_pair(
                         temperature=cfg.model.temperature,
                     ),
                 )
-                signal_summary = signal_summary_with_providers(signals, list(signals.providers))
                 target_provider.scope = "reference"
                 with event_recorder.span(
                     case_id=sample.sample_id,
@@ -134,7 +132,20 @@ def run_policy_pair(
                         pass_name="reference",
                         parent_event_id=policy_event.event_id,
                     ):
+                        signals = materialize_signals(
+                            sample=sample,
+                            backend=backend,
+                            context=context,
+                            request=signal_request_from_model_config(
+                                return_prompt_logprobs=cfg.model.return_prompt_logprobs,
+                                prefix_logprob_text=cfg.model.prefix_logprob_text,
+                            ),
+                        )
                         reference_outcome = reference_chain.run(request, target)
+                    signal_summary = signal_summary_with_providers(
+                        signals,
+                        list(signals.providers),
+                    )
                     policy_event.result = _policy_result_summary(reference_outcome)
                     reference_record = _record_outcome(
                         sample=sample,
@@ -160,8 +171,10 @@ def run_policy_pair(
 
             if release_target_before_intervention is not None:
                 _validate_staged_reference(prepared_cases)
+                prompt_logprobs_provider.release()
                 target_provider.release(release_target_before_intervention)
-                backend = None  # release the function-frame reference before provider materialization
+                # Drop the function-frame reference before provider materialization.
+                backend = None
 
             for prepared in prepared_cases:
                 target_provider.scope = "intervention"
@@ -197,6 +210,7 @@ def run_policy_pair(
 
     if release_target_before_intervention is not None and not target_provider.released:
         try:
+            prompt_logprobs_provider.release()
             target_provider.release(release_target_before_intervention)
             backend = None
         except BaseException as exc:

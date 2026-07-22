@@ -5,7 +5,9 @@ from typing import Any
 
 from turnkey.components.backends.base import LLMBackend
 from turnkey.capabilities import BackendCapabilities
+from turnkey.methods import MethodContext
 from turnkey.runtime_providers import ProviderSummary, backend_capabilities_dict
+from turnkey.runtime_providers.prompt_logprobs import PromptLogprobsRequest
 from turnkey.schema import PrefixLogprobs, PromptLogprobs, Sample
 from turnkey.pipeline_states import STATE_PREFIX_LOGPROBS, STATE_PROMPT_LOGPROBS
 
@@ -19,7 +21,9 @@ class SignalRequest:
 
     @staticmethod
     def merge(*requests: "SignalRequest") -> "SignalRequest":
-        prefix_texts = {req.prefix_logprob_text for req in requests if req.prefix_logprob_text is not None}
+        prefix_texts = {
+            req.prefix_logprob_text for req in requests if req.prefix_logprob_text is not None
+        }
         if len(prefix_texts) > 1:
             raise ValueError(f"conflicting prefix_logprob_text requests: {sorted(prefix_texts)}")
 
@@ -58,7 +62,9 @@ class SignalBundle:
         }
 
 
-def signal_request_from_model_config(*, return_prompt_logprobs: bool, prefix_logprob_text: str | None) -> SignalRequest:
+def signal_request_from_model_config(
+    *, return_prompt_logprobs: bool, prefix_logprob_text: str | None
+) -> SignalRequest:
     return SignalRequest(
         prompt_logprobs=bool(return_prompt_logprobs),
         prefix_logprob_text=prefix_logprob_text,
@@ -69,6 +75,7 @@ def materialize_signals(
     *,
     sample: Sample,
     backend: LLMBackend,
+    context: MethodContext,
     request: SignalRequest,
 ) -> SignalBundle:
     caps = backend.capabilities()
@@ -79,7 +86,9 @@ def materialize_signals(
     materialized: list[str] = []
 
     if request.prompt_logprobs:
-        prompt_logprobs = backend.get_prompt_logprobs(prompt=sample.prompt, images=sample.images)
+        prompt_logprobs = context.get(
+            PromptLogprobsRequest(prompt=sample.prompt, images=sample.images)
+        )
         materialized.append(STATE_PROMPT_LOGPROBS)
 
     if request.prefix_logprob_text is not None:

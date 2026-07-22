@@ -47,6 +47,7 @@ from .hidden_state import (
     normalize_hidden_state_model_family,
     normalize_hidden_state_token_strategy,
 )
+from .prompt_logprobs import PromptLogprobsProvider, PromptLogprobsRequest
 
 __all__ = [
     "GRADIENT_PROMPT_TEMPLATES",
@@ -75,6 +76,8 @@ __all__ = [
     "ProviderKind",
     "ProviderStatus",
     "ProviderSummary",
+    "PromptLogprobsProvider",
+    "PromptLogprobsRequest",
     "aggregate_hidden_state_tensor",
     "backend_capabilities_dict",
     "build_gradient_prompt_texts",
