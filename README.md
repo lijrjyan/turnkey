@@ -37,7 +37,7 @@ The first run is deliberately small: it runs on CPU, downloads no model, and
 requires no API key. GPU-backed methods and remote judges are optional layers,
 not prerequisites for understanding the system.
 
-## Why Turnkey
+### Core Features
 
 - **Bring your own detector:** load `path.py:build` without forking Turnkey or
   editing a central registry.

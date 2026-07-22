@@ -38,7 +38,7 @@ def test_readme_is_a_project_front_door() -> None:
         "img.shields.io/badge/Ask-DeepWiki-087fca?style=for-the-badge",
         "free public index cannot read a private GitHub repository",
         "## About",
-        "## Why Turnkey",
+        "### Core Features",
         "## Quick Start",
         "## Documentation",
         "## Community & Support",
@@ -49,6 +49,7 @@ def test_readme_is_a_project_front_door() -> None:
 
     assert "Star History" not in readme
     assert "star-history.com" not in readme
+    assert "## Why Turnkey" not in readme
     assert "actions/workflows/ci.yml/badge.svg" not in readme
     assert "issues-closed-raw" not in readme
 
