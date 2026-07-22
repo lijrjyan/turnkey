@@ -7,11 +7,11 @@
   <p>A development and debugging harness for jailbreak detectors, guards, and model-side safety policies.</p>
 
   <p>
-    <a href="https://github.com/lijrjyan/turnkey/actions/workflows/ci.yml"><img src="https://github.com/lijrjyan/turnkey/actions/workflows/ci.yml/badge.svg?branch=dev" alt="Development branch CI status"></a>
-    <a href="https://pypi.org/project/turnkey/"><img src="https://img.shields.io/pypi/v/turnkey?label=PyPI%20namespace" alt="PyPI namespace version"></a>
-    <a href="https://www.python.org/downloads/"><img src="https://img.shields.io/badge/Python-3.10%2B-3776AB?logo=python&logoColor=white" alt="Python 3.10 or newer"></a>
-    <a href="LICENSE"><img src="https://img.shields.io/badge/License-Apache--2.0-blue" alt="Apache 2.0 license"></a>
-    <a href="https://deepwiki.com/lijrjyan/turnkey"><img src="https://deepwiki.com/badge.svg" alt="Ask DeepWiki"></a>
+    <a href="https://github.com/lijrjyan/turnkey/stargazers"><img src="https://img.shields.io/github/stars/lijrjyan/turnkey?style=for-the-badge&logo=github&label=stars" alt="GitHub stars"></a>
+    <a href="https://github.com/lijrjyan/turnkey/blob/main/LICENSE"><img src="https://img.shields.io/github/license/lijrjyan/turnkey?style=for-the-badge" alt="license"></a>
+    <a href="https://github.com/lijrjyan/turnkey/issues"><img src="https://img.shields.io/github/issues-closed-raw/lijrjyan/turnkey?style=for-the-badge&label=closed%20issues" alt="closed issues"></a>
+    <a href="https://github.com/lijrjyan/turnkey/issues"><img src="https://img.shields.io/github/issues-raw/lijrjyan/turnkey?style=for-the-badge&label=open%20issues" alt="open issues"></a>
+    <a href="https://deepwiki.com/lijrjyan/turnkey"><img src="https://img.shields.io/badge/Ask-DeepWiki-087fca?style=for-the-badge" alt="Ask DeepWiki"></a>
   </p>
 </div>
 
@@ -60,8 +60,8 @@ dataset -> attack -> target -> judge -> detector policy -> metrics -> audit
 ## Quick Start
 
 The supported preview is currently installed from source. The `turnkey` name
-on PyPI is reserved at `0.0.1`; it is not yet the functional `0.1.0` source
-preview documented here.
+on [PyPI](https://pypi.org/project/turnkey/) is reserved at `0.0.1`; it is not
+yet the functional `0.1.0` source preview documented here.
 
 ```bash
 git clone https://github.com/lijrjyan/turnkey.git

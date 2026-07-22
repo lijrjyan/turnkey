@@ -31,6 +31,11 @@ def test_readme_is_a_project_front_door() -> None:
         "Bring Your Own Detector",
         "https://pypi.org/project/turnkey/",
         "https://deepwiki.com/lijrjyan/turnkey",
+        "img.shields.io/github/stars/lijrjyan/turnkey?style=for-the-badge&logo=github&label=stars",
+        "img.shields.io/github/license/lijrjyan/turnkey?style=for-the-badge",
+        "img.shields.io/github/issues-closed-raw/lijrjyan/turnkey?style=for-the-badge&label=closed%20issues",
+        "img.shields.io/github/issues-raw/lijrjyan/turnkey?style=for-the-badge&label=open%20issues",
+        "img.shields.io/badge/Ask-DeepWiki-087fca?style=for-the-badge",
         "free public index cannot read a private GitHub repository",
         "## About",
         "## Why Turnkey",
@@ -44,6 +49,8 @@ def test_readme_is_a_project_front_door() -> None:
 
     assert "Star History" not in readme
     assert "star-history.com" not in readme
+    assert "actions/workflows/ci.yml/badge.svg" not in readme
+    assert "img.shields.io/pypi/v/turnkey" not in readme
 
 
 def test_deepwiki_configuration_preserves_product_boundaries() -> None:
