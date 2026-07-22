@@ -151,7 +151,8 @@ uv sync --extra dev --extra hf --extra judges
 
 ## Community & Support
 
-- Read [AGENTS.md](AGENTS.md) before changing runtime or learning content.
+- Read [CONTRIBUTING.md](CONTRIBUTING.md) before changing runtime or learning
+  content.
 - Use [GitHub Issues](https://github.com/lijrjyan/turnkey/issues) for confirmed
   bugs, documentation gaps, and scoped feature proposals.
 - After the public repository has been indexed, use
@@ -159,6 +160,10 @@ uv sync --extra dev --extra hf --extra judges
   architecture and ask code-grounded questions.
 - Never include credentials, private prompts, unpublished datasets, or personal
   data in issues, logs, examples, or generated artifacts.
+- See [SUPPORT.md](SUPPORT.md) for reporting boundaries and
+  [SECURITY.md](SECURITY.md) for sensitive disclosures.
+- Project decisions follow [GOVERNANCE.md](GOVERNANCE.md) and community
+  participation follows [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md).
 
 ## Project Status
 

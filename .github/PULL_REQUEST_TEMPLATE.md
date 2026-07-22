@@ -9,7 +9,9 @@ Refs: #<primary-tracking-issue>
 
 - [ ] `uv run make test`
 - [ ] `uv run make lint`
-- [ ] Offline small-model smoke (required if runtime path is affected; see `AGENTS.md`):
+- [ ] `uv run make smoke` for CPU-safe runtime changes.
+- [ ] Offline small-model smoke (required if a model runtime path is affected;
+      see `CONTRIBUTING.md`):
   `HF_HUB_OFFLINE=1 RUN_DIR=$(uv run turnkey run --config configs/runs/qwen3_0_6b_pipeline_smoke.yaml) && uv run turnkey audit "$RUN_DIR"`
 
 ## Notes / Risks
