@@ -151,8 +151,6 @@ uv sync --extra dev --extra hf --extra judges
 
 ## Community & Support
 
-- Read [CONTRIBUTING.md](CONTRIBUTING.md) before changing runtime or learning
-  content.
 - Use [GitHub Issues](https://github.com/lijrjyan/turnkey/issues) for confirmed
   bugs, documentation gaps, and scoped feature proposals.
 - After the public repository has been indexed, use
@@ -160,10 +158,8 @@ uv sync --extra dev --extra hf --extra judges
   architecture and ask code-grounded questions.
 - Never include credentials, private prompts, unpublished datasets, or personal
   data in issues, logs, examples, or generated artifacts.
-- See [SUPPORT.md](SUPPORT.md) for reporting boundaries and
-  [SECURITY.md](SECURITY.md) for sensitive disclosures.
-- Project decisions follow [GOVERNANCE.md](GOVERNANCE.md) and community
-  participation follows [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md).
+- Do not open a public issue for a vulnerability or suspected data leak. Use
+  GitHub's private vulnerability reporting channel when it is available.
 
 ## Project Status
 
@@ -176,6 +172,10 @@ The README badge and `.devin/wiki.json` prepare DeepWiki integration, but the
 free public index cannot read a private GitHub repository. Ask DeepWiki becomes
 active after the formal repository is public and indexed; private indexing
 requires a connected Devin account.
+
+## Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=lijrjyan/turnkey&type=Date)](https://www.star-history.com/#lijrjyan/turnkey&Date)
 
 ## License
 

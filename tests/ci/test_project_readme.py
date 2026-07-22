@@ -5,7 +5,8 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
 
-PUBLIC_GOVERNANCE_FILES = (
+WORKSPACE_ONLY_FILES = (
+    "AGENTS.md",
     "CHANGELOG.md",
     "CODE_OF_CONDUCT.md",
     "CONTRIBUTING.md",
@@ -13,6 +14,12 @@ PUBLIC_GOVERNANCE_FILES = (
     "RELEASING.md",
     "SECURITY.md",
     "SUPPORT.md",
+    ".githooks",
+    ".github/CODEOWNERS",
+    ".github/dependabot.yml",
+    ".github/ISSUE_TEMPLATE",
+    ".github/PULL_REQUEST_TEMPLATE.md",
+    "scripts/install-git-hooks.sh",
 )
 
 
@@ -23,6 +30,7 @@ def test_readme_is_a_project_front_door() -> None:
         '<div align="center">',
         "Bring Your Own Detector",
         "https://pypi.org/project/turnkey/",
+        "api.star-history.com/svg?repos=lijrjyan/turnkey&type=Date",
         "https://deepwiki.com/lijrjyan/turnkey",
         "free public index cannot read a private GitHub repository",
         "## About",
@@ -31,7 +39,7 @@ def test_readme_is_a_project_front_door() -> None:
         "## Documentation",
         "## Community & Support",
         "## License",
-        "[CONTRIBUTING.md](CONTRIBUTING.md)",
+        "## Star History",
     )
     for fragment in required_fragments:
         assert fragment in readme
@@ -46,35 +54,19 @@ def test_deepwiki_configuration_preserves_product_boundaries() -> None:
     assert "private" in notes.casefold()
 
 
-def test_public_governance_boundary_is_complete() -> None:
-    for relative_path in PUBLIC_GOVERNANCE_FILES:
-        path = ROOT / relative_path
-        assert path.is_file(), f"missing public governance file: {relative_path}"
-        assert len(path.read_text(encoding="utf-8").splitlines()) >= 5
+def test_repository_level_docs_are_intentionally_minimal() -> None:
+    assert (ROOT / "README.md").is_file()
+    license_text = (ROOT / "LICENSE").read_text(encoding="utf-8")
+    assert "Apache License" in license_text
+    assert "Version 2.0" in license_text
 
-    security = (ROOT / "SECURITY.md").read_text(encoding="utf-8")
-    support = (ROOT / "SUPPORT.md").read_text(encoding="utf-8")
-    contributing = (ROOT / "CONTRIBUTING.md").read_text(encoding="utf-8")
-    releasing = (ROOT / "RELEASING.md").read_text(encoding="utf-8")
-
-    assert "Do not open a public issue" in security
-    assert "best effort" in support
-    assert "uv run ruff check ." in contributing
-    assert "dev" in releasing and "main" in releasing
+    for relative_path in WORKSPACE_ONLY_FILES:
+        assert not (ROOT / relative_path).exists(), (
+            f"workspace-only material leaked into product repository: {relative_path}"
+        )
 
 
 def test_repository_automation_is_reviewable_and_immutable() -> None:
-    required_files = (
-        ".github/CODEOWNERS",
-        ".github/dependabot.yml",
-        ".github/ISSUE_TEMPLATE/bug.yml",
-        ".github/ISSUE_TEMPLATE/config.yml",
-        ".github/ISSUE_TEMPLATE/documentation.yml",
-        ".github/ISSUE_TEMPLATE/feature.yml",
-    )
-    for relative_path in required_files:
-        assert (ROOT / relative_path).is_file(), f"missing repository file: {relative_path}"
-
     workflow = (ROOT / ".github/workflows/ci.yml").read_text(encoding="utf-8")
     action_refs = re.findall(r"\buses:\s+[^\s@]+@([^\s#]+)", workflow)
     assert action_refs
