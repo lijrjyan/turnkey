@@ -9,6 +9,9 @@ Start with a task, not the directory listing.
 | Local Hugging Face model | `runs/smoke_hf.yaml` |
 | vLLM/SGLang/OpenAI-compatible server | `runs/smoke_openai_compat.yaml` |
 | Prompt logprobs | `runs/smoke_logprobs.yaml` |
+| Perplexity filter | `runs/smoke_perplexity.yaml` |
+| Output Self-Exam | `runs/smoke_self_exam.yaml` |
+| Llama Guard input detector | `runs/smoke_llamaguard_detector.yaml` |
 | Hidden-state provider | `runs/smoke_rcs_paper.yaml` |
 | Gradient provider | `runs/smoke_gradsafe.yaml` |
 | Matrix planning | `matrix/example.yaml` |

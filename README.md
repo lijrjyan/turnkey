@@ -112,6 +112,9 @@ capabilities:
 | `smoothllm` | Perturbation and repeated target calls |
 | `jailguard` | Mutation and divergence |
 | `gradsafe` | Gradient provider |
+| `perplexity` | Typed prompt-logprob filter |
+| `self_exam` | Output-side deterministic self-screening |
+| `llamaguard` | Separate Llama Guard input classifier |
 | `rcs_toy` | CPU-safe representation proxy |
 | `rcs` | Hidden-state provider and calibration |
 
@@ -130,6 +133,7 @@ Choose the shortest path for what you are trying to do:
 | Add a detector without changing Turnkey | [Build an external detector](docs/guides/build-a-detector.md) |
 | Trace a missed or overblocked case | [Debug a run](docs/guides/debug-a-run.md) |
 | Understand policies and model signals | [Runtime concepts](docs/concepts/runtime.md) |
+| Compare model-based safety filters | [Model-based filters](docs/guides/model_based_filters.md) |
 | Learn the public artifact contract | [Artifact concepts](docs/concepts/artifacts.md) |
 | Use the command line precisely | [CLI reference](docs/reference/cli.md) |
 | Learn interactively | [Executable notebooks](docs/notebooks/) |

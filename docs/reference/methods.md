@@ -9,6 +9,9 @@ Turnkey ships a compact set of methods that exercise different runtime capabilit
 | `smoothllm` | Perturbation and repeated target calls | Policy control flow |
 | `jailguard` | Mutation and divergence | Multi-sample detector behavior |
 | `gradsafe` | Gradient provider | White-box gradient signals |
+| `perplexity` | Typed prompt log-probabilities | Input anomaly baseline |
+| `self_exam` | Deterministic target self-screening | Output-side policy flow |
+| `llamaguard` | Separate guard-model provider | Input safety classification |
 | `rcs_toy` | CPU-safe representation proxy | Lightweight method development |
 | `rcs` | Hidden-state provider and calibration | White-box representation methods |
 

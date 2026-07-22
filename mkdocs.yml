@@ -62,6 +62,7 @@ nav:
       - Ten-minute quickstart: get-started/quickstart.md
   - Build:
       - Build a detector: guides/build-a-detector.md
+      - Model-based filters: guides/model_based_filters.md
       - Policies and typed signals: concepts/runtime.md
   - Debug:
       - Debug a run: guides/debug-a-run.md
@@ -71,6 +72,7 @@ nav:
       - Build your own detector: notebooks/01_build_your_own_detector.ipynb
       - Debug a missed case: notebooks/02_debug_a_missed_case.ipynb
       - Typed signals: notebooks/03_typed_signals.ipynb
+      - Perplexity filter: notebooks/04_perplexity_filter.ipynb
   - Reference:
       - CLI: reference/cli.md
       - Included methods: reference/methods.md
