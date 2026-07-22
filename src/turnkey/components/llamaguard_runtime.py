@@ -129,16 +129,23 @@ class LlamaGuardRuntime:
     def classify(self, messages: Sequence[Mapping[str, str]]) -> LlamaGuardResult:
         self._load_model()
         message_list = [dict(message) for message in messages]
-        input_ids = self._tokenizer.apply_chat_template(
+        encoded = self._tokenizer.apply_chat_template(
             message_list,
             return_tensors="pt",
-        ).to(self._device)
+        )
+        encoded = encoded.to(self._device)
+        if isinstance(encoded, Mapping):
+            model_inputs = dict(encoded)
+            input_ids = model_inputs["input_ids"]
+        else:
+            input_ids = encoded
+            model_inputs = {"input_ids": input_ids}
         pad_token_id = getattr(self._tokenizer, "pad_token_id", None)
         if pad_token_id is None:
             pad_token_id = getattr(self._tokenizer, "eos_token_id", None)
         with self._torch.inference_mode():
             outputs = self._model.generate(
-                input_ids=input_ids,
+                **model_inputs,
                 max_new_tokens=self.max_new_tokens,
                 do_sample=False,
                 pad_token_id=pad_token_id,

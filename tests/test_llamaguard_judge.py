@@ -13,6 +13,7 @@ from turnkey.components.judges.llamaguard import (
     _import_hf_dependencies,
     parse_llamaguard_output,
 )
+from turnkey.components.llamaguard_runtime import LlamaGuardRuntime
 from turnkey.schema import Sample
 
 
@@ -173,4 +174,62 @@ def test_llamaguard_passes_revision_to_model_and_tokenizer(monkeypatch: pytest.M
                 "local_files_only": False,
             },
         ),
+    ]
+
+
+def test_runtime_accepts_batch_encoding_from_chat_template() -> None:
+    calls: list[dict[str, object]] = []
+
+    class FakeTensor:
+        shape = (1, 2)
+
+    input_ids = FakeTensor()
+
+    class FakeEncoding(dict):
+        def to(self, device):
+            assert device == "cuda"
+            return self
+
+    class FakeTokenizer:
+        pad_token_id = 0
+
+        def apply_chat_template(self, messages, return_tensors):  # noqa: ANN001
+            assert messages == [{"role": "user", "content": "hello"}]
+            assert return_tensors == "pt"
+            return FakeEncoding(input_ids=input_ids, attention_mask="mask")
+
+        def decode(self, output_ids, skip_special_tokens):  # noqa: ANN001
+            assert output_ids == [2]
+            assert skip_special_tokens is True
+            return "safe"
+
+    class FakeModel:
+        def generate(self, **kwargs):
+            calls.append(kwargs)
+            return [[0, 1, 2]]
+
+    class InferenceMode:
+        def __enter__(self):
+            return None
+
+        def __exit__(self, *_args):
+            return None
+
+    runtime = LlamaGuardRuntime(require_token=False)
+    runtime._model = FakeModel()
+    runtime._tokenizer = FakeTokenizer()
+    runtime._device = "cuda"
+    runtime._torch = SimpleNamespace(inference_mode=InferenceMode)
+
+    result = runtime.classify(({"role": "user", "content": "hello"},))
+
+    assert result.label == "safe"
+    assert calls == [
+        {
+            "input_ids": input_ids,
+            "attention_mask": "mask",
+            "max_new_tokens": 32,
+            "do_sample": False,
+            "pad_token_id": 0,
+        }
     ]
