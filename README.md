@@ -9,7 +9,7 @@
   <p>
     <a href="https://github.com/lijrjyan/turnkey/stargazers"><img src="https://img.shields.io/github/stars/lijrjyan/turnkey?style=for-the-badge&logo=github&label=stars" alt="GitHub stars"></a>
     <a href="https://github.com/lijrjyan/turnkey/blob/main/LICENSE"><img src="https://img.shields.io/github/license/lijrjyan/turnkey?style=for-the-badge" alt="license"></a>
-    <a href="https://github.com/lijrjyan/turnkey/issues"><img src="https://img.shields.io/github/issues-closed-raw/lijrjyan/turnkey?style=for-the-badge&label=closed%20issues" alt="closed issues"></a>
+    <a href="https://pypi.org/project/turnkey/"><img src="https://img.shields.io/pypi/v/turnkey?style=for-the-badge&logo=pypi&label=PyPI" alt="PyPI version"></a>
     <a href="https://github.com/lijrjyan/turnkey/issues"><img src="https://img.shields.io/github/issues-raw/lijrjyan/turnkey?style=for-the-badge&label=open%20issues" alt="open issues"></a>
     <a href="https://deepwiki.com/lijrjyan/turnkey"><img src="https://img.shields.io/badge/Ask-DeepWiki-087fca?style=for-the-badge" alt="Ask DeepWiki"></a>
   </p>
