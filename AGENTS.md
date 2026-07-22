@@ -3,8 +3,10 @@
 Turnkey is a detector-development harness. Keep the public repository focused on runnable product behavior, user learning, and reproducible evidence; paper drafts, private experiment payloads, local planning ledgers, and secrets do not belong here.
 
 All development and local commits must happen on `dev`. Run
-`scripts/install-git-hooks.sh` after cloning. Direct pushes to `main` are
-forbidden; `main` may advance only through an explicitly approved review/merge.
+`scripts/install-git-hooks.sh` after cloning. The formal `origin/main` is the
+default stable branch; changes enter it only after owner approval or a formal
+review/merge. A verified local `dev` commit may be pushed to `preview/main`
+when the owner authorizes the private product preview.
 
 The runtime flow is:
 

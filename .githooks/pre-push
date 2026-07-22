@@ -1,9 +1,17 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+remote_name="${1:-}"
+zero_sha="0000000000000000000000000000000000000000"
+
 while read -r local_ref local_sha remote_ref remote_sha; do
-  if [[ "$remote_ref" == refs/heads/* && "$remote_ref" != "refs/heads/dev" ]]; then
-    echo "Direct pushes are allowed only to dev; rejected $remote_ref." >&2
+  if [[ "$local_sha" == "$zero_sha" ]]; then
+    continue
+  fi
+  if [[ "$remote_ref" == refs/heads/* \
+    && "$remote_ref" != "refs/heads/dev" \
+    && !( "$remote_name" == "preview" && "$remote_ref" == "refs/heads/main" ) ]]; then
+    echo "Push rejected: use dev, or preview/main for the private product preview." >&2
     exit 1
   fi
 done
