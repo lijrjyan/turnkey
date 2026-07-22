@@ -506,10 +506,7 @@ def _coerce_mapping(value: Any, field_name: str) -> dict[str, Any]:
 
 _CALIBRATORS = {
     "keyword": _calibrate_keyword_fixture,
-    "keyword_v3": _calibrate_keyword_fixture,
     "gradsafe": _calibrate_gradsafe,
-    "gradsafe_v3": _calibrate_gradsafe,
     "jailguard": _calibrate_jailguard,
-    "jailguard_v3": _calibrate_jailguard,
-    "rcs_paper_v3": _calibrate_rcs_paper,
+    "rcs": _calibrate_rcs_paper,
 }

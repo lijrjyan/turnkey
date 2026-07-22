@@ -1,52 +1,44 @@
 from pathlib import Path
+import re
 
 from turnkey.components.detectors import available_detectors, load_detector
 from turnkey.components.detectors.rcs import RCSPaperPolicy
 from turnkey.config import DetectorConfig, load_config
 
 
-def test_complex_builtins_expose_only_policy_runtime_names() -> None:
+def test_builtins_expose_only_stable_unversioned_names() -> None:
     names = set(available_detectors())
 
-    assert {"jailguard", "gradsafe", "rcs"}.isdisjoint(names)
     assert {
-        "jailguard_v3",
-        "gradsafe_v3",
-        "smoothllm_v3",
-        "rcs_toy_v3",
-        "rcs_paper_v3",
+        "allow_all",
+        "keyword",
+        "jailguard",
+        "gradsafe",
+        "smoothllm",
+        "rcs_toy",
+        "rcs",
     } <= names
+    assert all(re.search(r"_v[0-9]+$", name) is None for name in names)
 
 
 def test_gradsafe_smoke_uses_policy_runtime_name() -> None:
     cfg = load_config(Path("configs/runs/smoke_gradsafe.yaml"))
 
-    assert cfg.detector.name == "gradsafe_v3"
+    assert cfg.detector.name == "gradsafe"
 
 
-def test_simple_detector_aliases_share_one_runtime_contract() -> None:
-    pairs = (
-        (DetectorConfig(name="allow_all"), DetectorConfig(name="allow_all_v3")),
-        (
-            DetectorConfig(name="keyword", params={"keywords": ["blocked"]}),
-            DetectorConfig(name="keyword_v3", params={"keywords": ["blocked"]}),
-        ),
-    )
-
-    for base_config, versioned_config in pairs:
-        base_manifest = load_detector(base_config).manifest(name=base_config.name).to_dict()
-        versioned_manifest = load_detector(versioned_config).manifest(name=versioned_config.name).to_dict()
-        base_manifest.pop("name")
-        versioned_manifest.pop("name")
-
-        assert base_manifest == versioned_manifest
+def test_simple_detector_names_load_directly() -> None:
+    assert load_detector(DetectorConfig(name="allow_all")).manifest().name
+    assert load_detector(
+        DetectorConfig(name="keyword", params={"keywords": ["blocked"]})
+    ).manifest().name
 
 
 def test_rcs_registry_selects_mode_without_class_compatibility_state() -> None:
-    toy = load_detector(DetectorConfig(name="rcs_toy_v3", params={"mode": "toy"}))
+    toy = load_detector(DetectorConfig(name="rcs_toy", params={"mode": "toy"}))
     paper = load_detector(
         DetectorConfig(
-            name="rcs_paper_v3",
+            name="rcs",
             params={
                 "mode": "paper",
                 "model": {"model_id": "hidden-model", "device": "cpu"},

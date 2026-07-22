@@ -444,7 +444,7 @@ def test_reproduce_pair_exports_matrix_goals_for_official_pair(tmp_path: Path) -
                         },
                     }
                 ],
-                "detectors": [{"name": "allow_all_v3", "params": {}}],
+                "detectors": [{"name": "allow_all", "params": {}}],
             },
             sort_keys=False,
         ),

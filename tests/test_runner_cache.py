@@ -246,7 +246,7 @@ def test_policy_gradsafe_reuses_reference_outputs_without_reopening_target(
             return_prompt_logprobs=True,
         ),
         detector=DetectorConfig(
-            name="gradsafe_v3",
+            name="gradsafe",
             params={
                 "model_id": "fake-gradient-model",
                 "device": "cpu",
@@ -298,7 +298,7 @@ def test_policy_rcs_releases_target_before_hidden_state_fit_and_reuses_outputs(
         run=RunConfig(name="policy-rcs-staged", out_dir=str(tmp_path), max_samples=2),
         model=ModelConfig(backend="test_releasable_backend", model_id="fake-target-model"),
         detector=DetectorConfig(
-            name="rcs_paper_v3",
+            name="rcs",
             params={
                 "mode": "paper",
                 "method": "kcd",

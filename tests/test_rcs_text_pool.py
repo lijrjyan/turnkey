@@ -83,7 +83,7 @@ def test_cli_builds_rcs_text_pool_jsonl_and_manifest(tmp_path: Path) -> None:
         train_jsonl=str(out_path),
         require_balanced_train=True,
     )
-    training = det.manifest(name="rcs_paper_v3").to_dict()["reproducibility"]["training_examples"]
+    training = det.manifest(name="rcs").to_dict()["reproducibility"]["training_examples"]
     assert training["split_counts"] == manifest["split_counts"]
 
 

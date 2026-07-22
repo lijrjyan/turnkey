@@ -221,10 +221,10 @@ def test_jailguard_manifest_records_inputs_and_reproducibility() -> None:
         n_variants=3,
         response_mode="backend",
         mutator="PI",
-    ).manifest(name="jailguard_v3")
+    ).manifest(name="jailguard")
     data = manifest.to_dict()
 
-    assert data["name"] == "jailguard_v3"
+    assert data["name"] == "jailguard"
     assert data["required_inputs"] == ["sample", "prompt"]
     assert data["reproducibility"]["response_mode"] == "backend"
 
@@ -232,7 +232,7 @@ def test_jailguard_manifest_records_inputs_and_reproducibility() -> None:
 def test_jailguard_echo_run_records_policy_component_and_audits(tmp_path: Path) -> None:
     cfg_path = _jailguard_config(
         tmp_path,
-        run_name="jailguard-v3-echo",
+        run_name="jailguard-echo",
         detector_params={
             "n_variants": 3,
             "mutator": "PI",
@@ -249,7 +249,7 @@ def test_jailguard_echo_run_records_policy_component_and_audits(tmp_path: Path) 
     assert audit_run_dir(run_dir) == []
     run = _load_run(run_dir)
     component = run["components"]["intervention"]
-    assert component["name"] == "jailguard_v3"
+    assert component["name"] == "jailguard"
     assert component["parameters"]["response_mode"] == "echo_prompt"
     assert component["parameters"]["n_variants"] == 3
     events = _load_events(run_dir)
@@ -259,7 +259,7 @@ def test_jailguard_echo_run_records_policy_component_and_audits(tmp_path: Path) 
 def test_jailguard_backend_run_uses_policy_target_calls(tmp_path: Path) -> None:
     cfg_path = _jailguard_config(
         tmp_path,
-        run_name="jailguard-v3-backend",
+        run_name="jailguard-backend",
         detector_params={
             "n_variants": 2,
             "mutator": "PI",
@@ -287,7 +287,7 @@ def _jailguard_config(tmp_path: Path, *, run_name: str, detector_params: dict) -
     raw["run"]["name"] = run_name
     raw["run"]["out_dir"] = str(tmp_path / "outputs")
     raw["detector"] = {
-        "name": "jailguard_v3",
+        "name": "jailguard",
         "params": detector_params,
     }
     cfg_path = tmp_path / f"{run_name}.yaml"

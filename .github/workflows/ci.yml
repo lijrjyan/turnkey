@@ -51,7 +51,6 @@ jobs:
               - "src/turnkey/components/detectors/base.py"
               - "src/turnkey/runner/run.py"
               - "configs/runs/smoke_jailguard.yaml"
-              - "configs/runs/jailguard_paper_openai.yaml"
             attacks:
               - "src/turnkey/components/attacks/**"
               - "configs/runs/smoke_pair.yaml"
@@ -329,13 +328,13 @@ jobs:
         env:
           HF_HUB_OFFLINE: "1"
         run: |
-          MODEL_CACHE="${HF_HOME:-$HOME/.cache/huggingface}/hub/models--Qwen--Qwen3-0.6B"
+          MODEL_CACHE="${HF_HOME:-$HOME/.cache/huggingface}/hub/models--Qwen--Qwen2.5-0.5B-Instruct"
           if [ ! -d "$MODEL_CACHE" ]; then
             echo "Skipping offline HF smoke; cache not found at $MODEL_CACHE" | tee -a "$GITHUB_STEP_SUMMARY"
             exit 0
           fi
           uv run python scripts/ci/run_trace_smoke.py \
-            --config configs/runs/qwen3_0_6b_pipeline_smoke.yaml \
+            --config configs/runs/smoke_hf.yaml \
             --out-root outputs/ci-nightly-hf
       - name: Upload nightly reports
         if: always()

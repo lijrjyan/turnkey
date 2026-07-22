@@ -13,10 +13,5 @@ def test_matrix_plan_ci_helper_generates_expected_plan_set(
     exit_code = helper.main(["--out-root", str(tmp_path / "plans")])
 
     assert exit_code == 0
-    expected = {
-        "qwen3_0_6b_bounded_reproduction_v9",
-        "qwen35_2b_main_v11",
-        "qwen35_2b_lofo_v11",
-        "qwen25_7b_robustness_v11",
-    }
+    expected = {"example"}
     assert {path.parent.name for path in (tmp_path / "plans").glob("*/plan.json")} == expected

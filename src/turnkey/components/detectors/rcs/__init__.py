@@ -189,13 +189,13 @@ class RCSDetector(Detector):
 
     def _init_policy_paper(self, method: str) -> None:
         if method not in {"mcd", "kcd"}:
-            raise ValueError("rcs_paper_v3: method must be 'mcd' or 'kcd'")
+            raise ValueError("rcs: method must be 'mcd' or 'kcd'")
         if not isinstance(self.model, dict):
-            raise ValueError("rcs_paper_v3 requires params.model (dict)")
+            raise ValueError("rcs requires params.model (dict)")
 
         model_id = self.model.get("model_id")
         if not isinstance(model_id, str) or not model_id:
-            raise ValueError("rcs_paper_v3: params.model must include model_id (str)")
+            raise ValueError("rcs: params.model must include model_id (str)")
 
         self.mode = "paper"
         self.method = method
@@ -241,8 +241,8 @@ class RCSDetector(Detector):
         if str(self.mode).strip().lower() == "paper":
             return self._paper_manifest(name=name)
         return DetectorManifest(
-            name=name or "rcs_toy_v3",
-            version="v3-toy",
+            name=name or "rcs_toy",
+            version="toy",
             required_inputs=("sample", "prompt", "images"),
             reproducibility={
                 "mode": "toy",
@@ -276,8 +276,8 @@ class RCSDetector(Detector):
             prototype_image_path=self.prototype_image_path,
         )
         return DetectorManifest(
-            name=name or "rcs_paper_v3",
-            version="v3-paper",
+            name=name or "rcs",
+            version="paper",
             required_inputs=(
                 "sample",
                 "prompt",

@@ -16,18 +16,8 @@ def _build_allow_all(_: DetectorConfig) -> Detector:
     return AllowAllDetector()
 
 
-@register_detector("allow_all_v3")
-def _build_allow_all_v3(_: DetectorConfig) -> Detector:
-    return AllowAllDetector()
-
-
 @register_detector("keyword")
 def _build_keyword(cfg: DetectorConfig) -> Detector:
-    return _build_keyword_detector(cfg)
-
-
-@register_detector("keyword_v3")
-def _build_keyword_v3(cfg: DetectorConfig) -> Detector:
     return _build_keyword_detector(cfg)
 
 
@@ -38,18 +28,18 @@ def _build_keyword_detector(cfg: DetectorConfig) -> Detector:
     return KeywordDetector(tuple(keywords))
 
 
-@register_detector("jailguard_v3")
-def _build_jailguard_v3(cfg: DetectorConfig) -> Detector:
+@register_detector("jailguard")
+def _build_jailguard(cfg: DetectorConfig) -> Detector:
     return JailGuardDetector(**cfg.params)
 
 
-@register_detector("rcs_toy_v3")
-def _build_rcs_toy_v3(cfg: DetectorConfig) -> Detector:
+@register_detector("rcs_toy")
+def _build_rcs_toy(cfg: DetectorConfig) -> Detector:
     return _build_rcs_detector(cfg, expected_mode="toy")
 
 
-@register_detector("rcs_paper_v3")
-def _build_rcs_paper_v3(cfg: DetectorConfig) -> Detector:
+@register_detector("rcs")
+def _build_rcs(cfg: DetectorConfig) -> Detector:
     return _build_rcs_detector(cfg, expected_mode="paper")
 
 
@@ -62,13 +52,13 @@ def _build_rcs_detector(cfg: DetectorConfig, *, expected_mode: str) -> Detector:
     return RCSDetector(**params)
 
 
-@register_detector("gradsafe_v3")
-def _build_gradsafe_v3(cfg: DetectorConfig) -> Detector:
+@register_detector("gradsafe")
+def _build_gradsafe(cfg: DetectorConfig) -> Detector:
     return GradSafeDetector(**cfg.params)
 
 
-@register_detector("smoothllm_v3")
-def _build_smoothllm_v3(cfg: DetectorConfig) -> Detector:
+@register_detector("smoothllm")
+def _build_smoothllm(cfg: DetectorConfig) -> Detector:
     return SmoothLLMDetector(**cfg.params)
 
 

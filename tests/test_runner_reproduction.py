@@ -31,7 +31,7 @@ def test_run_receipt_records_reproduction_metadata(tmp_path: Path) -> None:
                     "temperature": 0.0,
                 },
                 "nsg": {"baseline_detector": {"name": "allow_all", "params": {}}},
-                "detector": {"name": "keyword_v3", "params": {"keywords": ["UNSAFE_PLACEHOLDER"]}},
+                "detector": {"name": "keyword", "params": {"keywords": ["UNSAFE_PLACEHOLDER"]}},
                 "judge": {"name": "dummy_refusal", "params": {}},
                 "reproduction": {
                     "claim": "bounded_qwen_reproduction",

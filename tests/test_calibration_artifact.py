@@ -98,8 +98,8 @@ def test_calibration_artifact_requires_schema_version() -> None:
 def test_detector_specific_calibration_artifact_examples_round_trip(tmp_path: Path) -> None:
     examples = [
         CalibrationArtifact(
-            detector_name="rcs_paper_v3",
-            detector_version="v3-standardized",
+            detector_name="rcs",
+            detector_version="standardized",
             artifact_kind="projection_threshold",
             target_model=CalibrationTargetModel(model_id="Qwen/Qwen3.5-2B", backend="hf"),
             method={
@@ -113,8 +113,8 @@ def test_detector_specific_calibration_artifact_examples_round_trip(tmp_path: Pa
             files={"projection": {"path": "projection.pt", "sha256": "0" * 64}},
         ),
         CalibrationArtifact(
-            detector_name="gradsafe_v3",
-            detector_version="v3-standardized",
+            detector_name="gradsafe",
+            detector_version="standardized",
             artifact_kind="reference_threshold",
             target_model=CalibrationTargetModel(model_id="Qwen/Qwen3.5-2B", backend="hf"),
             method={
@@ -128,8 +128,8 @@ def test_detector_specific_calibration_artifact_examples_round_trip(tmp_path: Pa
             files={"reference": {"path": "gradsafe-reference.pt", "sha256": "1" * 64}},
         ),
         CalibrationArtifact(
-            detector_name="jailguard_v3",
-            detector_version="v3-standardized",
+            detector_name="jailguard",
+            detector_version="standardized",
             artifact_kind="operating_point",
             target_model=CalibrationTargetModel(model_id="Qwen/Qwen3.5-2B", backend="hf"),
             method={

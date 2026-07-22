@@ -111,26 +111,26 @@ def test_smoothllm_policy_tie_selects_a_refusal() -> None:
     assert outcome.diagnostics["jailbroken_fraction"] == 0.5
 
 
-def test_smoothllm_v3_registration_and_manifest() -> None:
+def test_smoothllm_registration_and_manifest() -> None:
     detector = load_detector(
         DetectorConfig(
-            name="smoothllm_v3",
+            name="smoothllm",
             params={"num_copies": 3, "pert_pct": 20, "seed": 5},
         )
     )
 
-    manifest = detector.manifest(name="smoothllm_v3").to_dict()
+    manifest = detector.manifest(name="smoothllm").to_dict()
 
     assert isinstance(detector, SmoothLLMDetector)
     assert manifest["required_inputs"] == ["sample", "prompt"]
     assert manifest["reproducibility"] == {"seed": 5}
 
 
-def test_smoothllm_v3_runner_measures_actual_target_calls(tmp_path: Path) -> None:
+def test_smoothllm_runner_measures_actual_target_calls(tmp_path: Path) -> None:
     config = yaml.safe_load(Path("configs/runs/smoke.yaml").read_text(encoding="utf-8"))
     config["run"].update({"name": "smoothllm-policy-test", "out_dir": str(tmp_path)})
     config["detector"] = {
-        "name": "smoothllm_v3",
+        "name": "smoothllm",
         "params": {
             "pert_type": "RandomSwapPerturbation",
             "pert_pct": 100,

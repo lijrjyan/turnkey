@@ -19,7 +19,7 @@ def _write_run(tmp_path: Path, *, score_rule: str, threshold: float, rows: list[
             "intervention": {
                 "mode": "loaded",
                 "identity": {"path": "artifacts/detector-calibration.json", "sha256": "abc", "bytes": 123},
-                "detector_name": "jailguard_v3",
+                "detector_name": "jailguard",
                 "artifact_kind": "jailguard_operating_point",
                 "threshold": threshold,
                 "method": {

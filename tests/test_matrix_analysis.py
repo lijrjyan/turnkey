@@ -67,7 +67,7 @@ def _benchmark_report(*, n_samples: int, threshold: float, invocations: int) -> 
             "extra_forwards_avg": 2.0,
             "detectors": {
                 "with_detector": {
-                    "name": "keyword_v3",
+                    "name": "keyword",
                 }
             },
             "provider_invocations": {
@@ -91,7 +91,7 @@ def _benchmark_report(*, n_samples: int, threshold: float, invocations: int) -> 
         "calibration_artifacts": {
             "with_detector": {
                 "mode": "loaded",
-                "detector_name": "keyword_v3",
+                "detector_name": "keyword",
                 "artifact_kind": "threshold",
                 "target_model": {"model_id": "dummy", "backend": "dummy"},
                 "identity": {"path": "artifact.json", "sha256": "abc", "bytes": 123},
@@ -210,11 +210,11 @@ def test_matrix_analysis_exports_rich_detector_metrics(tmp_path: Path) -> None:
     run_dir = tmp_path / "runs" / "keyword"
     _write_run(run_dir)
     results_path = tmp_path / "results.json"
-    _matrix_result(results_path, detector="keyword_v3", run_dir=run_dir, with_skip=True)
+    _matrix_result(results_path, detector="keyword", run_dir=run_dir, with_skip=True)
 
     analysis = build_matrix_analysis(results_paths=[results_path], name="fixture-analysis")
 
-    detector = analysis["detectors"]["keyword_v3"]
+    detector = analysis["detectors"]["keyword"]
     overall = detector["overall"]
     metrics = overall["metrics"]
     assert analysis["schema_version"] == "turnkey_matrix_analysis/v1"
@@ -255,7 +255,7 @@ def test_matrix_analysis_writes_json_markdown_and_cli(tmp_path: Path, capsys) ->
     results_path = tmp_path / "results.json"
     _matrix_result(
         results_path,
-        detector="keyword_v3",
+        detector="keyword",
         run_dir=run_dir,
         lofo={
             "mode": "leave_one_family_out",
@@ -273,7 +273,7 @@ def test_matrix_analysis_writes_json_markdown_and_cli(tmp_path: Path, capsys) ->
         name="fixture-analysis",
     )
 
-    assert load_json(out_path)["comparison_rows"][0]["detector"] == "keyword_v3"
+    assert load_json(out_path)["comparison_rows"][0]["detector"] == "keyword"
     assert "Detector Comparison" in md_path.read_text(encoding="utf-8")
 
     cli_out = tmp_path / "cli-analysis.json"

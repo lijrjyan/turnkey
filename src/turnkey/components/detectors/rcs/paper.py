@@ -896,13 +896,13 @@ def _load_rcs_paper_scoring_state(path: str | Path, *, map_location: str | None 
 def _scoring_state_path_from_artifact(artifact: Any) -> Path:
     files = getattr(artifact, "files", None)
     if not isinstance(files, dict):
-        raise ValueError("rcs_paper_v3 calibration artifact missing files")
+        raise ValueError("rcs calibration artifact missing files")
     scoring_state = files.get("scoring_state")
     if not isinstance(scoring_state, dict):
-        raise ValueError("rcs_paper_v3 calibration artifact missing files.scoring_state")
+        raise ValueError("rcs calibration artifact missing files.scoring_state")
     path = scoring_state.get("path")
     if not isinstance(path, str) or not path:
-        raise ValueError("rcs_paper_v3 calibration artifact missing files.scoring_state.path")
+        raise ValueError("rcs calibration artifact missing files.scoring_state.path")
     return Path(path)
 
 

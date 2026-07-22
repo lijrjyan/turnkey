@@ -70,7 +70,7 @@ class FakeRCSHiddenStateProvider:
 
 def test_rcs_toy_mcd_blocks_placeholder_on_multimodal_sample() -> None:
     det = load_detector(
-        DetectorConfig(name="rcs_toy_v3", params={"mode": "toy", "method": "mcd", "threshold": 0.0, "prototype_image_count": 1})
+        DetectorConfig(name="rcs_toy", params={"mode": "toy", "method": "mcd", "threshold": 0.0, "prototype_image_count": 1})
     )
     img = ImageInput(path="__t__")
     benign = Sample(sample_id="b", behavior_id="b", is_benign=True, prompt="Say hello.", images=(img,))
@@ -86,7 +86,7 @@ def test_rcs_toy_mcd_blocks_placeholder_on_multimodal_sample() -> None:
 
 
 def test_rcs_toy_kcd_runs() -> None:
-    det = load_detector(DetectorConfig(name="rcs_toy_v3", params={"mode": "toy", "method": "kcd", "threshold": 0.0}))
+    det = load_detector(DetectorConfig(name="rcs_toy", params={"mode": "toy", "method": "kcd", "threshold": 0.0}))
     s = Sample(sample_id="s", behavior_id="s", is_benign=True, prompt="Hello.")
     out = det.decide(s)
     assert isinstance(out.block, bool)
@@ -94,24 +94,24 @@ def test_rcs_toy_kcd_runs() -> None:
 
 
 def test_rcs_toy_manifest_documents_toy_scope() -> None:
-    manifest = RCSDetector(mode="toy", method="mcd", threshold=0.0).manifest(name="rcs_toy_v3")
+    manifest = RCSDetector(mode="toy", method="mcd", threshold=0.0).manifest(name="rcs_toy")
     data = manifest.to_dict()
 
-    assert data["name"] == "rcs_toy_v3"
+    assert data["name"] == "rcs_toy"
     assert data["required_inputs"] == ["sample", "prompt", "images"]
     assert data["reproducibility"]["mode"] == "toy"
 
 
 def test_rcs_toy_registry_rejects_paper_mode() -> None:
     with pytest.raises(ValueError, match="only supports mode=toy"):
-        load_detector(DetectorConfig(name="rcs_toy_v3", params={"mode": "paper"}))
+        load_detector(DetectorConfig(name="rcs_toy", params={"mode": "paper"}))
 
 
 def test_rcs_toy_policy_run_persists_component_and_audits(tmp_path: Path) -> None:
     raw = yaml.safe_load(Path("configs/runs/smoke_rcs.yaml").read_text(encoding="utf-8"))
     raw["run"]["out_dir"] = str(tmp_path / "outputs")
     raw["detector"] = {
-        "name": "rcs_toy_v3",
+        "name": "rcs_toy",
         "params": {
             "mode": "toy",
             "method": "mcd",
@@ -119,7 +119,7 @@ def test_rcs_toy_policy_run_persists_component_and_audits(tmp_path: Path) -> Non
             "prototype_image_count": 1,
         },
     }
-    cfg_path = tmp_path / "rcs_toy_v3.yaml"
+    cfg_path = tmp_path / "rcs_toy.yaml"
     cfg_path.write_text(yaml.safe_dump(raw, sort_keys=False), encoding="utf-8")
 
     run_dir = run_eval(load_config(cfg_path), source_config_path=str(cfg_path))
@@ -127,7 +127,7 @@ def test_rcs_toy_policy_run_persists_component_and_audits(tmp_path: Path) -> Non
     assert audit_run_dir(run_dir) == []
     run = json.loads((run_dir / "run.json").read_text(encoding="utf-8"))
     component = run["components"]["intervention"]
-    assert component["name"] == "rcs_toy_v3"
+    assert component["name"] == "rcs_toy"
     assert component["parameters"]["mode"] == "toy"
     assert component["parameters"]["method"] == "mcd"
 
@@ -142,10 +142,10 @@ def test_rcs_paper_manifest_documents_reproducibility_inputs() -> None:
         benign_prompts=["benign 0", "benign 1"],
         malicious_prompts=["malicious 0", "malicious 1"],
     )
-    manifest = det.manifest(name="rcs_paper_v3")
+    manifest = det.manifest(name="rcs")
     data = manifest.to_dict()
 
-    assert data["name"] == "rcs_paper_v3"
+    assert data["name"] == "rcs"
     assert data["required_inputs"] == ["sample", "prompt", "images"]
     assert data["reproducibility"]["training_examples"]["count"] == 4
     assert data["reproducibility"]["training_examples"]["schema"]["version"] == "rcs_train_jsonl/v1"
@@ -182,7 +182,7 @@ def test_rcs_paper_accepts_balanced_train_jsonl_contract(tmp_path: Path) -> None
         train_jsonl=str(train_jsonl),
         require_balanced_train=True,
     )
-    manifest = det.manifest(name="rcs_paper_v3").to_dict()
+    manifest = det.manifest(name="rcs").to_dict()
     training = manifest["reproducibility"]["training_examples"]
 
     assert training["source"] == str(train_jsonl)
@@ -237,12 +237,12 @@ def test_rcs_paper_policy_run_uses_typed_hidden_state_requests_and_audits(
     tmp_path: Path,
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
-    run_dir = _run_rcs_paper_v3_with_fake_provider(tmp_path, monkeypatch)
+    run_dir = _run_rcs_with_fake_provider(tmp_path, monkeypatch)
 
     assert audit_run_dir(run_dir) == []
     run = load_json(run_dir / "run.json")
     component = run["components"]["intervention"]
-    assert component["name"] == "rcs_paper_v3"
+    assert component["name"] == "rcs"
     assert component["parameters"]["mode"] == "paper"
     assert component["parameters"]["method"] == "kcd"
     assert not any(
@@ -262,7 +262,7 @@ def test_rcs_paper_policy_run_uses_typed_hidden_state_requests_and_audits(
 
 
 
-def _run_rcs_paper_v3_with_fake_provider(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> Path:
+def _run_rcs_with_fake_provider(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> Path:
     pytest.importorskip("torch")
     from turnkey.components.detectors import rcs as rcs_module
 
@@ -286,11 +286,11 @@ def _run_rcs_paper_v3_with_fake_provider(tmp_path: Path, monkeypatch: pytest.Mon
 
     monkeypatch.setattr(rcs_module, "LastTokenHiddenStateRequestProvider", FakeRCSHiddenStateRequestProvider)
     raw = yaml.safe_load(Path("configs/runs/smoke.yaml").read_text(encoding="utf-8"))
-    raw["run"]["name"] = "rcs-paper-v3-provider"
+    raw["run"]["name"] = "rcs-provider"
     raw["run"]["out_dir"] = str(tmp_path / "outputs")
     raw["run"]["max_samples"] = 2
     raw["detector"] = {
-        "name": "rcs_paper_v3",
+        "name": "rcs",
         "params": {
             "mode": "paper",
             "method": "kcd",
@@ -316,7 +316,7 @@ def _run_rcs_paper_v3_with_fake_provider(tmp_path: Path, monkeypatch: pytest.Mon
             "malicious_prompts": ["malicious 0", "malicious 1"],
         },
     }
-    cfg_path = tmp_path / "rcs_paper_v3.yaml"
+    cfg_path = tmp_path / "rcs.yaml"
     cfg_path.write_text(yaml.safe_dump(raw, sort_keys=False), encoding="utf-8")
 
     return run_eval(load_config(cfg_path), source_config_path=str(cfg_path))

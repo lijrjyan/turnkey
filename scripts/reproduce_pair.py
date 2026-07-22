@@ -135,7 +135,7 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--instruction", default="Explain the water cycle in one sentence.")
     parser.add_argument("--dataset", default=None, help="Optional turnkey dataset name, e.g. fixtures_smoke")
     parser.add_argument("--dataset-n-samples", type=int, default=4)
-    parser.add_argument("--spec", default="configs/matrix/qwen35_2b_main_v11.yaml")
+    parser.add_argument("--spec", default="configs/matrix/example.yaml")
     parser.add_argument("--attack-name", default="pair")
     parser.add_argument("--manifest", default=None, help="Optional manifest path for export/import artifact modes")
     parser.add_argument(
@@ -409,7 +409,7 @@ def _write_pair_reference_batch(
         "n_iterations": args.max_queries,
         "notes": [
             "The JSONL contains raw per-goal official PAIR command arguments.",
-            "Keep this artifact local and ignored with pair_goals_v11.jsonl.",
+            "Keep this artifact local and ignored with pair_goals.jsonl.",
         ],
     }
     manifest_path = out_path.with_suffix(".manifest.json")
@@ -444,7 +444,7 @@ def _reference_pair_argv(
         "--index",
         str(index),
         "--category",
-        "turnkey_pair_v11",
+        "turnkey_pair",
     ]
     if args.not_jailbreakbench:
         argv.append("--not-jailbreakbench")

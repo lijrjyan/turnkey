@@ -47,8 +47,8 @@ def _sample() -> Sample:
 
 
 def test_gradsafe_registered_and_loadable_without_model_load() -> None:
-    assert "gradsafe_v3" in available_detectors()
-    detector = load_detector(DetectorConfig(name="gradsafe_v3", params={"threshold": 0.5}))
+    assert "gradsafe" in available_detectors()
+    detector = load_detector(DetectorConfig(name="gradsafe", params={"threshold": 0.5}))
     assert isinstance(detector, GradSafeDetector)
     assert detector.model_id == DEFAULT_MODEL_ID
     assert len(detector.method_providers()) == 1
@@ -237,10 +237,10 @@ def test_missing_hf_dependencies_are_actionable(monkeypatch: pytest.MonkeyPatch)
 
 
 def test_gradsafe_manifest_records_inputs_and_reproducibility() -> None:
-    manifest = GradSafeDetector(threshold=0.5, model_id="test-model").manifest(name="gradsafe_v3")
+    manifest = GradSafeDetector(threshold=0.5, model_id="test-model").manifest(name="gradsafe")
     data = manifest.to_dict()
 
-    assert data["name"] == "gradsafe_v3"
+    assert data["name"] == "gradsafe"
     assert data["required_inputs"] == ["sample", "prompt"]
     assert data["reproducibility"]["anchor_response"] == "Sure"
     assert data["reproducibility"]["prompt_template"] == "simple_chat"
@@ -250,7 +250,7 @@ def test_gradsafe_manifest_records_inputs_and_reproducibility() -> None:
 
 
 def test_gradsafe_manifest_accepts_qwen_chat_template() -> None:
-    manifest = GradSafeDetector(prompt_template="qwen_chat").manifest(name="gradsafe_v3")
+    manifest = GradSafeDetector(prompt_template="qwen_chat").manifest(name="gradsafe")
     assert manifest.to_dict()["reproducibility"]["prompt_template"] == "qwen_chat"
 
 
@@ -373,22 +373,6 @@ def test_gradsafe_reference_artifact_is_cached(monkeypatch: pytest.MonkeyPatch) 
     assert calls == [("reference.pt", 0.0)]
 
 
-def test_gradsafe_reference_prompt_smoke_config_declares_provider_controls() -> None:
-    cfg = load_config(Path("configs/runs/v9_qwen3_0_6b_gradsafe_reference_prompt_smoke.yaml"))
-    detector = load_detector(cfg.detector)
-    manifest = detector.manifest(name=cfg.detector.name).to_dict()
-
-    assert cfg.run.name == "v9-qwen3-0-6b-gradsafe-reference-prompt-smoke"
-    assert cfg.detector.name == "gradsafe_v3"
-    assert cfg.detector.params["prompt_template"] == "llama2_inst"
-    assert cfg.detector.params["separator_token"] == "<|endoftext|>"
-    assert cfg.detector.params["anchor_response"] == "Sure"
-    assert cfg.detector.params["parameter_regex"] == "(mlp|self)"
-    assert manifest["reproducibility"]["prompt_template"] == "llama2_inst"
-    assert manifest["reproducibility"]["separator_token"] == "<|endoftext|>"
-    assert manifest["reproducibility"]["anchor_response"] == "Sure"
-
-
 def test_gradsafe_policy_run_records_gradient_provider_and_audits(
     tmp_path: Path,
     monkeypatch: pytest.MonkeyPatch,
@@ -428,14 +412,14 @@ def test_gradsafe_policy_run_records_gradient_provider_and_audits(
             return None
 
     monkeypatch.setattr(gradsafe, "GradientScoreRequestProvider", FakeGradientRequestProvider)
-    cfg_path = _gradsafe_v3_config(tmp_path)
+    cfg_path = _gradsafe_config(tmp_path)
 
     run_dir = run_eval(load_config(cfg_path), source_config_path=str(cfg_path))
 
     assert audit_run_dir(run_dir) == []
     run = json.loads((run_dir / "run.json").read_text(encoding="utf-8"))
     component = run["components"]["intervention"]
-    assert component["name"] == "gradsafe_v3"
+    assert component["name"] == "gradsafe"
     assert component["parameters"]["model_id"] == "fake-gradient-model"
     assert component["parameters"]["score_mode"] == "gradient_norm"
     sample = json.loads((run_dir / "cases.jsonl").read_text(encoding="utf-8").splitlines()[0])
@@ -459,13 +443,13 @@ def test_gradsafe_policy_run_records_gradient_provider_and_audits(
 
 
 
-def _gradsafe_v3_config(tmp_path: Path) -> Path:
+def _gradsafe_config(tmp_path: Path) -> Path:
     raw = yaml.safe_load(Path("configs/runs/smoke.yaml").read_text(encoding="utf-8"))
     raw["run"]["name"] = "gradsafe-v3"
     raw["run"]["out_dir"] = str(tmp_path / "outputs")
     raw["run"]["max_samples"] = 2
     raw["detector"] = {
-        "name": "gradsafe_v3",
+        "name": "gradsafe",
         "params": {
             "model_id": "fake-gradient-model",
             "threshold": 0.5,
@@ -473,6 +457,6 @@ def _gradsafe_v3_config(tmp_path: Path) -> Path:
             "parameter_regex": "(lm_head|embed_tokens|wte)",
         },
     }
-    cfg_path = tmp_path / "gradsafe_v3.yaml"
+    cfg_path = tmp_path / "gradsafe.yaml"
     cfg_path.write_text(yaml.safe_dump(raw, sort_keys=False), encoding="utf-8")
     return cfg_path

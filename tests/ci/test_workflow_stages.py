@@ -96,7 +96,7 @@ def test_trace_smoke_audit_always_exercises_model_responses_provider() -> None:
     assert "configs/runs/smoke_jailguard.yaml" in trace_matrix
 
 
-def test_jailguard_path_filter_tracks_component_location_and_paper_config() -> None:
+def test_jailguard_path_filter_tracks_component_location_and_smoke_config() -> None:
     workflow = yaml.safe_load(Path(".github/workflows/ci.yml").read_text(encoding="utf-8"))
     jailguard_paths = workflow["jobs"]["changes"]["outputs"]["detector_jailguard"]
     filter_step = next(step for step in workflow["jobs"]["changes"]["steps"] if step.get("id") == "filter")
@@ -104,7 +104,7 @@ def test_jailguard_path_filter_tracks_component_location_and_paper_config() -> N
 
     assert "steps.filter.outputs.detector_jailguard" in jailguard_paths
     assert "src/turnkey/components/detectors/jailguard.py" in filter_paths
-    assert "configs/runs/jailguard_paper_openai.yaml" in filter_paths
+    assert "configs/runs/smoke_jailguard.yaml" in filter_paths
     assert "src/turnkey/detectors/jailguard.py" not in filter_paths
 
 
@@ -181,6 +181,6 @@ def test_targeted_gradsafe_gate_uses_fake_provider_smoke() -> None:
 def test_jailguard_smoke_exercises_model_responses_provider() -> None:
     smoke = yaml.safe_load(Path("configs/runs/smoke_jailguard.yaml").read_text(encoding="utf-8"))
 
-    assert smoke["detector"]["name"] == "jailguard_v3"
+    assert smoke["detector"]["name"] == "jailguard"
     assert smoke["detector"]["params"]["response_mode"] == "backend"
     assert smoke["model"]["backend"] == "dummy"

@@ -9,35 +9,13 @@ from turnkey.matrix import write_matrix_plan
 
 
 MATRIX_SPECS: dict[str, dict[str, Any]] = {
-    "qwen3_0_6b_bounded_reproduction_v9": {
-        "path": Path("configs/matrix/qwen3_0_6b_bounded_reproduction_v9.yaml"),
-        "counts": {"entries": 84, "planned": 84, "skipped": 0},
-        "detectors": {"rcs_paper_v3", "gradsafe_v3", "jailguard_v3"},
-        "model_ids": {"Qwen/Qwen3-0.6B"},
-        "judges": {"strongreject"},
-    },
-    "qwen35_2b_main_v11": {
-        "path": Path("configs/matrix/qwen35_2b_main_v11.yaml"),
-        "counts": {"entries": 160, "planned": 160, "skipped": 0},
-        "detectors": {"allow_all_v3", "keyword_v3", "rcs_paper_v3", "gradsafe_v3", "jailguard_v3"},
-        "model_ids": {"Qwen/Qwen3.5-2B"},
-        "judges": {"strongreject"},
-    },
-    "qwen35_2b_lofo_v11": {
-        "path": Path("configs/matrix/qwen35_2b_lofo_v11.yaml"),
-        "counts": {"entries": 35, "planned": 35, "skipped": 0},
-        "detectors": {"rcs_paper_v3", "gradsafe_v3", "jailguard_v3", "keyword_v3", "allow_all_v3"},
-        "model_ids": {"Qwen/Qwen3.5-2B"},
-        "judges": {"strongreject"},
-        "lofo_holdouts": {"persona", "manyshot", "deepinception", "artprompt", "tap", "crescendo", "pair"},
-    },
-    "qwen25_7b_robustness_v11": {
-        "path": Path("configs/matrix/qwen25_7b_robustness_v11.yaml"),
-        "counts": {"entries": 10, "planned": 10, "skipped": 0},
-        "detectors": {"allow_all_v3", "keyword_v3", "rcs_paper_v3", "gradsafe_v3", "jailguard_v3"},
-        "model_ids": {"Qwen/Qwen2.5-7B-Instruct"},
-        "judges": {"strongreject"},
-    },
+    "example": {
+        "path": Path("configs/matrix/example.yaml"),
+        "counts": {"entries": 2, "planned": 2, "skipped": 0},
+        "detectors": {"allow_all", "keyword"},
+        "model_ids": {"dummy-smoke"},
+        "judges": {"dummy_refusal"},
+    }
 }
 
 
@@ -84,14 +62,6 @@ def check_one(spec_name: str, *, out_root: Path) -> Path:
         label="judges",
         spec_name=spec_name,
     )
-
-    if "lofo_holdouts" in expected:
-        _assert_set(
-            {entry["lofo"]["holdout_attack"] for entry in planned},
-            set(expected["lofo_holdouts"]),
-            label="LOFO holdouts",
-            spec_name=spec_name,
-        )
 
     print(f"OK {spec_name}: {plan_path}")
     return plan_path

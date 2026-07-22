@@ -22,7 +22,7 @@ nsg:
     params: {}
 
 detector:
-  name: rcs_paper_v3
+  name: rcs
   params:
     mode: paper
     method: kcd

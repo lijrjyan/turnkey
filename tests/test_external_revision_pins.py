@@ -105,7 +105,7 @@ def _valid_matrix_spec() -> dict[str, object]:
             }
         ],
         "attacks": [{"name": "none", "params": {}}],
-        "detectors": [{"name": "allow_all_v3", "params": {}}],
+        "detectors": [{"name": "allow_all", "params": {}}],
     }
 
 
@@ -134,7 +134,7 @@ def test_matrix_spec_rejects_unpinned_detector_model(tmp_path: Path) -> None:
     raw = _valid_matrix_spec()
     raw["detectors"] = [
         {
-            "name": "gradsafe_v3",
+            "name": "gradsafe",
             "params": {
                 "model_id": "Qwen/Qwen3-0.6B",
                 "revision": None,

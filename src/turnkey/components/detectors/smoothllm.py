@@ -49,11 +49,11 @@ class SmoothLLMDetector(Detector):
         return SmoothLLMPolicy(self)
 
     def decide(self, sample: Sample) -> DetectorDecision:  # noqa: ARG002
-        raise RuntimeError("smoothllm_v3 requires Policy target generation")
+        raise RuntimeError("smoothllm requires Policy target generation")
 
     def manifest(self, *, name: str | None = None) -> DetectorManifest:
         return DetectorManifest(
-            name=name or "smoothllm_v3",
+            name=name or "smoothllm",
             required_inputs=("sample", "prompt"),
             reproducibility={"seed": self.seed},
         )

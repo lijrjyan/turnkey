@@ -12,10 +12,10 @@ from turnkey.runner import run_eval
 
 
 def test_keyword_manifest_declares_prompt_input() -> None:
-    manifest = KeywordDetector(("UNSAFE_PLACEHOLDER",)).manifest(name="keyword_v3")
+    manifest = KeywordDetector(("UNSAFE_PLACEHOLDER",)).manifest(name="keyword")
     data = manifest.to_dict()
 
-    assert data["name"] == "keyword_v3"
+    assert data["name"] == "keyword"
     assert data["required_inputs"] == ["sample", "prompt"]
     assert data["reproducibility"] == {"keywords": ["UNSAFE_PLACEHOLDER"]}
 
@@ -24,10 +24,10 @@ def test_keyword_policy_run_preserves_blocked_path_and_audits(tmp_path: Path) ->
     raw = yaml.safe_load(Path("configs/runs/smoke_persona.yaml").read_text(encoding="utf-8"))
     raw["run"]["out_dir"] = str(tmp_path / "outputs")
     raw["detector"] = {
-        "name": "keyword_v3",
+        "name": "keyword",
         "params": {"keywords": ["UNSAFE_PLACEHOLDER"]},
     }
-    cfg_path = tmp_path / "keyword_v3.yaml"
+    cfg_path = tmp_path / "keyword.yaml"
     cfg_path.write_text(yaml.safe_dump(raw, sort_keys=False), encoding="utf-8")
 
     run_dir = run_eval(load_config(cfg_path), source_config_path=str(cfg_path))
@@ -45,7 +45,7 @@ def test_keyword_policy_run_preserves_blocked_path_and_audits(tmp_path: Path) ->
 
     run = json.loads((run_dir / "run.json").read_text(encoding="utf-8"))
     assert run["components"]["intervention"] == {
-        "name": "keyword_v3",
+        "name": "keyword",
         "parameters": {"keywords": ["UNSAFE_PLACEHOLDER"]},
-        "source": {"kind": "builtin", "name": "keyword_v3"},
+        "source": {"kind": "builtin", "name": "keyword"},
     }

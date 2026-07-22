@@ -26,7 +26,7 @@ nsg:
     params: {}
 
 detector:
-  name: smoothllm_v3
+  name: smoothllm
   params:
     pert_type: RandomSwapPerturbation
     pert_pct: 10

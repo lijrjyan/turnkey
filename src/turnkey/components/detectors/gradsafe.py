@@ -56,10 +56,10 @@ def _gradsafe_reference_path_from_artifact(artifact: Any) -> str | None:
     if reference is None:
         return None
     if not isinstance(reference, dict):
-        raise ValueError("gradsafe_v3 calibration artifact files.reference must be an object")
+        raise ValueError("gradsafe calibration artifact files.reference must be an object")
     path = reference.get("path")
     if not isinstance(path, str) or not path:
-        raise ValueError("gradsafe_v3 calibration artifact missing files.reference.path")
+        raise ValueError("gradsafe calibration artifact missing files.reference.path")
     return path
 
 
@@ -69,7 +69,7 @@ def _gradsafe_threshold_from_artifact(artifact: Any, *, score_mode: str) -> floa
         artifact_score_mode = operating_point.get("score_mode")
         if isinstance(artifact_score_mode, str) and artifact_score_mode != score_mode:
             raise ValueError(
-                "gradsafe_v3 calibration artifact score_mode mismatch: "
+                "gradsafe calibration artifact score_mode mismatch: "
                 f"expected {score_mode!r}, got {artifact_score_mode!r}"
             )
     threshold = getattr(artifact, "threshold", None)
@@ -558,8 +558,8 @@ class GradSafeDetector(Detector):
 
     def manifest(self, *, name: str | None = None) -> DetectorManifest:
         return DetectorManifest(
-            name=name or "gradsafe_v3",
-            version="v3-standardized",
+            name=name or "gradsafe",
+            version="standardized",
             required_inputs=("sample", "prompt"),
             reproducibility={
                 "model_id": self.model_id,

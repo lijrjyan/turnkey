@@ -22,7 +22,7 @@ nsg:
     params: {}
 
 detector:
-  name: jailguard_v3
+  name: jailguard
   params:
     # CI-safe Policy fan-out: dummy target exercises variant generations without external queries.
     response_mode: backend

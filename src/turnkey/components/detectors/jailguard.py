@@ -919,8 +919,8 @@ class JailGuardDetector(Detector):
 
     def manifest(self, *, name: str | None = None) -> DetectorManifest:
         return DetectorManifest(
-            name=name or "jailguard_v3",
-            version="v3-standardized",
+            name=name or "jailguard",
+            version="standardized",
             required_inputs=("sample", "prompt"),
             reproducibility={
                 "n_variants": self.n_variants,

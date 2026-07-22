@@ -22,7 +22,7 @@ nsg:
     params: {}
 
 detector:
-  name: rcs_toy_v3
+  name: rcs_toy
   params:
     mode: toy
     method: mcd

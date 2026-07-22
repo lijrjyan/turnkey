@@ -109,11 +109,11 @@ capabilities:
 | --- | --- |
 | `allow_all` | No-op baseline for pipeline and metric sanity |
 | `keyword` | Local prompt rule for the first detector and CI smoke |
-| `smoothllm_v3` | Perturbation and repeated target calls |
-| `jailguard_v3` | Mutation and divergence |
-| `gradsafe_v3` | Gradient provider |
-| `rcs_toy_v3` | CPU-safe representation proxy |
-| `rcs_paper_v3` | Hidden-state provider and calibration |
+| `smoothllm` | Perturbation and repeated target calls |
+| `jailguard` | Mutation and divergence |
+| `gradsafe` | Gradient provider |
+| `rcs_toy` | CPU-safe representation proxy |
+| `rcs` | Hidden-state provider and calibration |
 
 These integrations demonstrate the harness. They are not leaderboard results
 or claims of strict paper reproduction; original model, dataset, calibration,

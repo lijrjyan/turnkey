@@ -11,6 +11,9 @@ Start with a task, not the directory listing.
 | Prompt logprobs | `runs/smoke_logprobs.yaml` |
 | Hidden-state provider | `runs/smoke_rcs_paper.yaml` |
 | Gradient provider | `runs/smoke_gradsafe.yaml` |
-| Matrix planning | `matrix/tiny_v5.yaml` |
+| Matrix planning | `matrix/example.yaml` |
 
-Files with explicit model names, version suffixes, or reproduction labels are pinned research profiles. Use them to reproduce that exact lane, not as beginner templates.
+The repository intentionally ships generic examples only. Model-specific,
+versioned, and paper-campaign profiles belong in a private experiment workspace,
+where their model caches, gated data, and local artifacts can be managed without
+turning historical runs into public defaults.

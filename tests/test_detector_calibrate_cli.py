@@ -125,7 +125,7 @@ def test_detector_calibrate_cli_writes_rcs_scoring_state(
     raw["model"]["backend"] = "hf"
     raw["model"]["model_id"] = "fake-hidden-model"
     raw["detector"] = {
-        "name": "rcs_paper_v3",
+        "name": "rcs",
         "params": {
             "mode": "paper",
             "method": "kcd",
@@ -166,7 +166,7 @@ def test_detector_calibrate_cli_writes_rcs_scoring_state(
 
     assert rc == 0
     artifact = load_calibration_artifact(artifact_path)
-    assert artifact.detector_name == "rcs_paper_v3"
+    assert artifact.detector_name == "rcs"
     assert artifact.artifact_kind == "rcs_paper_scoring_state"
     assert artifact.method["calibration_rule"] == "held_out_training_split_weighted_balanced_accuracy_f1"
     assert artifact.operating_point["threshold_objective"]["balanced_accuracy_weight"] == 0.8
@@ -210,7 +210,7 @@ def test_detector_calibrate_cli_writes_gradsafe_operating_point(
     raw = yaml.safe_load(cfg_path.read_text(encoding="utf-8"))
     raw["model"]["model_id"] = "fake-gradient-model"
     raw["detector"] = {
-        "name": "gradsafe_v3",
+        "name": "gradsafe",
         "params": {
             "model_id": "fake-gradient-model",
             "threshold": 0.2,
@@ -237,7 +237,7 @@ def test_detector_calibrate_cli_writes_gradsafe_operating_point(
 
     assert rc == 0
     artifact = load_calibration_artifact(artifact_path)
-    assert artifact.detector_name == "gradsafe_v3"
+    assert artifact.detector_name == "gradsafe"
     assert artifact.artifact_kind == "gradsafe_operating_point"
     assert artifact.method["procedure_id"] == "gradsafe_gradient_norm_threshold"
     assert artifact.operating_point["score_mode"] == "gradient_norm"
@@ -293,7 +293,7 @@ def test_detector_calibrate_cli_writes_gradsafe_reference_artifact(
     raw = yaml.safe_load(cfg_path.read_text(encoding="utf-8"))
     raw["model"]["model_id"] = "fake-gradient-model"
     raw["detector"] = {
-        "name": "gradsafe_v3",
+        "name": "gradsafe",
         "params": {
             "model_id": "fake-gradient-model",
             "score_mode": "reference_cosine",
@@ -383,7 +383,7 @@ def test_detector_calibrate_cli_places_generated_gradsafe_reference_in_ready_cac
     raw = yaml.safe_load(cfg_path.read_text(encoding="utf-8"))
     raw["model"]["model_id"] = "fake-gradient-model"
     raw["detector"] = {
-        "name": "gradsafe_v3",
+        "name": "gradsafe",
         "params": {
             "model_id": "fake-gradient-model",
             "score_mode": "reference_cosine",
@@ -402,7 +402,7 @@ def test_detector_calibrate_cli_places_generated_gradsafe_reference_in_ready_cac
     assert cache_entry_ready(reference_path.parent) is True
     reference_manifest = load_cache_manifest(reference_path.parent)
     assert reference_manifest["capability"] == "gradsafe_reference_artifact"
-    assert reference_manifest["metadata"]["detector"] == "gradsafe_v3"
+    assert reference_manifest["metadata"]["detector"] == "gradsafe"
     assert reference_manifest["files"]["reference.pt"]["bytes"] == len(b"fake-reference-artifact")
     assert events == ["open:gradient_norm", "close", "open:reference_cosine", "close"]
 
@@ -411,7 +411,7 @@ def test_detector_calibrate_cli_writes_jailguard_operating_point(tmp_path: Path)
     cfg_path = _smoke_config(tmp_path)
     raw = yaml.safe_load(cfg_path.read_text(encoding="utf-8"))
     raw["detector"] = {
-        "name": "jailguard_v3",
+        "name": "jailguard",
         "params": {
             "n_variants": 4,
             "mutator": "PI",
@@ -442,7 +442,7 @@ def test_detector_calibrate_cli_writes_jailguard_operating_point(tmp_path: Path)
 
     assert rc == 0
     artifact = load_calibration_artifact(artifact_path)
-    assert artifact.detector_name == "jailguard_v3"
+    assert artifact.detector_name == "jailguard"
     assert artifact.artifact_kind == "jailguard_operating_point"
     assert artifact.method["procedure_id"] == "jailguard_operating_point_sweep"
     assert artifact.operating_point["response_mode"] == "echo_prompt"
@@ -456,14 +456,14 @@ def test_detector_calibrate_cli_writes_jailguard_operating_point(tmp_path: Path)
     run_dir = run_eval(cfg, source_config_path=str(cfg_path))
     assert audit_run_dir(run_dir) == []
     run = json.loads((run_dir / "run.json").read_text(encoding="utf-8"))
-    assert run["calibration_artifacts"]["intervention"]["detector_name"] == "jailguard_v3"
+    assert run["calibration_artifacts"]["intervention"]["detector_name"] == "jailguard"
 
 
 def test_detector_calibrate_cli_uses_jailguard_paper_default_threshold(tmp_path: Path) -> None:
     cfg_path = _smoke_config(tmp_path)
     raw = yaml.safe_load(cfg_path.read_text(encoding="utf-8"))
     raw["detector"] = {
-        "name": "jailguard_v3",
+        "name": "jailguard",
         "params": {
             "n_variants": 4,
             "mutator": "PI",
@@ -489,7 +489,7 @@ def test_detector_calibrate_cli_uses_jailguard_paper_default_threshold(tmp_path:
 
 def test_detector_calibrate_cli_rejects_detector_without_handler(tmp_path: Path) -> None:
     raw = yaml.safe_load(Path("configs/runs/smoke.yaml").read_text(encoding="utf-8"))
-    raw["detector"] = {"name": "allow_all_v3", "params": {}}
+    raw["detector"] = {"name": "allow_all", "params": {}}
     cfg_path = tmp_path / "unsupported.yaml"
     cfg_path.write_text(yaml.safe_dump(raw, sort_keys=False), encoding="utf-8")
 
