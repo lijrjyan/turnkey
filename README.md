@@ -152,12 +152,9 @@ Choose the shortest path for what you are trying to do:
 | Use the command line precisely | [CLI reference](https://lijrjyan.github.io/turnkey-site/reference/cli/) |
 | Learn interactively | [Executable notebooks](https://lijrjyan.github.io/turnkey-site/learn/) |
 
-Build the complete local documentation site with:
-
-```bash
-uv sync --extra docs
-uv run mkdocs serve
-```
+The complete documentation site lives at
+<https://lijrjyan.github.io/turnkey-site/> and is maintained in the
+[turnkey-site](https://github.com/lijrjyan/turnkey-site) repository.
 
 ## Development
 

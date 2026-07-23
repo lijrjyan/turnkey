@@ -29,12 +29,6 @@ def test_learning_notebooks_are_cpu_safe_and_have_turnkey_metadata() -> None:
         assert "pip install torch" not in sources
 
 
-def test_mkdocs_navigation_links_every_learning_notebook() -> None:
-    config = Path("mkdocs.yml").read_text(encoding="utf-8")
-    for name in NOTEBOOKS:
-        assert f"notebooks/{name}" in config
-
-
 def test_notebook_runner_lists_the_cpu_safe_suite() -> None:
     completed = subprocess.run(
         [sys.executable, "scripts/ci/run_notebooks.py", "--list"],

@@ -40,9 +40,8 @@ uv run make smoke
 When documentation or notebooks change, also run:
 
 ```bash
-uv sync --extra docs
+uv sync --extra notebooks
 uv run python scripts/ci/run_notebooks.py
-uv run mkdocs build --strict
 ```
 
 Optional GPU, Hugging Face, and remote-judge paths must state their environment,

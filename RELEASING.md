@@ -12,12 +12,11 @@ and documentation publication are separate release gates.
 3. Run the complete CPU-safe gate:
 
    ```bash
-   uv sync --extra dev --extra docs
+   uv sync --extra dev --extra notebooks
    uv run ruff check .
    uv run pytest -q
    uv run make smoke
    uv run python scripts/ci/run_notebooks.py
-   uv run mkdocs build --strict
    uv build
    ```
 

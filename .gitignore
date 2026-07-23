@@ -9,7 +9,6 @@ __pycache__/
 /outputs/
 /runs/
 /artifacts/
-/site/
 /dist/
 /build/
 /.rd_queue/

@@ -29,10 +29,8 @@ hf = [
 judges = [
   "openai>=1.0",
 ]
-docs = [
+notebooks = [
   "ipykernel>=6.29",
-  "mkdocs-jupyter>=0.25",
-  "mkdocs-material>=9.6",
   "nbclient>=0.10",
   "nbformat>=5.10",
 ]

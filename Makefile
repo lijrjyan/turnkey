@@ -1,4 +1,4 @@
-.PHONY: docs fmt lint notebooks smoke test
+.PHONY: fmt lint notebooks smoke test
 
 lint:
 	ruff check src tests scripts
@@ -18,5 +18,3 @@ smoke:
 notebooks:
 	python scripts/ci/run_notebooks.py
 
-docs:
-	mkdocs build --strict
