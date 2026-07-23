@@ -20,7 +20,7 @@
 
 <p align="center">
   <a href="#quick-start"><b>Quick Start</b></a> |
-  <a href="https://lijrjyan.github.io/turnkey-site/"><b>Documentation</b></a> |
+  <a href="https://lijrjyan.github.io/turnkey-site/about/"><b>Documentation</b></a> |
   <a href="https://lijrjyan.github.io/turnkey-site/learn/"><b>Notebooks</b></a> |
   <a href="examples/"><b>Examples</b></a> |
   <a href="https://deepwiki.com/lijrjyan/turnkey"><b>Ask DeepWiki</b></a> |
