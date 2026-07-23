@@ -1,0 +1,42 @@
+run:
+  name: smoke_guardreasoner
+  out_dir: outputs
+  redact: true
+  max_samples: 1
+
+# GuardReasoner is a reasoning-based LLM safeguard that performs:
+# - Task 1: Prompt harmfulness detection
+# - Task 2: Refusal detection
+# - Task 3: Response harmfulness detection
+# Reference: https://arxiv.org/abs/2501.18492
+
+dataset:
+  name: fixtures_smoke
+  params:
+    n_samples: 1
+
+model:
+  backend: dummy
+  model_id: dummy-smoke
+  max_new_tokens: 32
+  temperature: 0.0
+
+nsg:
+  enabled: true
+  baseline_detector:
+    name: allow_all
+    params: {}
+
+detector:
+  name: allow_all
+  params: {}
+
+judge:
+  name: guardreasoner
+  params:
+    model_size: "1B"
+    revision: 7366fed092abb513044d6f96bdb5af3230a7fc46
+    device: "cuda"
+    max_new_tokens: 512
+    temperature: 0.0
+    torch_dtype: "auto"

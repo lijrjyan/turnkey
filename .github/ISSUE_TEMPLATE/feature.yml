@@ -1,0 +1,36 @@
+name: Feature proposal
+description: Propose a focused product capability or public-contract change.
+title: "feat: "
+labels: [enhancement]
+body:
+  - type: markdown
+    attributes:
+      value: Describe the user problem before prescribing an implementation. Do not include private research or data.
+  - type: textarea
+    id: problem
+    attributes:
+      label: User problem
+      description: Who is blocked, and what observable outcome is missing?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed capability
+      description: Include the smallest useful public interface or workflow.
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Evidence and alternatives
+      description: Link public examples or describe workarounds already tried.
+  - type: checkboxes
+    id: boundaries
+    attributes:
+      label: Boundary check
+      options:
+        - label: I distinguished a runnable integration from scientific reproduction and production readiness.
+          required: true
+        - label: I removed credentials, private prompts, unpublished datasets, and personal data.
+          required: true

@@ -1,0 +1,39 @@
+run:
+  name: smoke_deepinception
+  out_dir: outputs
+  redact: true
+  max_samples: 4
+
+dataset:
+  name: fixtures_smoke
+  params:
+    n_samples: 4
+
+attack:
+  name: deepinception
+  params:
+    layers: 5
+    min_characters: 5
+    scene: "dream"
+    attack_family: "T2"
+
+model:
+  backend: dummy
+  model_id: dummy-smoke
+  max_new_tokens: 32
+  temperature: 0.0
+
+nsg:
+  enabled: true
+  baseline_detector:
+    name: allow_all
+    params: {}
+
+detector:
+  name: keyword
+  params:
+    keywords: ["UNSAFE_PLACEHOLDER"]
+
+judge:
+  name: dummy_refusal
+  params: {}

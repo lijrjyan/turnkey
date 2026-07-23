@@ -1,0 +1,35 @@
+run:
+  name: sorrybench-202406-smoke
+  out_dir: outputs
+  redact: true
+  max_samples: 4
+
+dataset:
+  name: sorrybench_202406
+  params:
+    revision: b34822276edde97592eda99c0b56d306f8830469
+    shuffle: false
+    limit: 4
+    split: train
+    # Official SORRY-Bench is gated. Set HF_TOKEN or run `huggingface-cli login`.
+    token_env: HF_TOKEN
+
+model:
+  backend: dummy
+  model_id: dummy-smoke
+  max_new_tokens: 32
+  temperature: 0.0
+
+nsg:
+  enabled: true
+  baseline_detector:
+    name: allow_all
+    params: {}
+
+detector:
+  name: allow_all
+  params: {}
+
+judge:
+  name: dummy_refusal
+  params: {}

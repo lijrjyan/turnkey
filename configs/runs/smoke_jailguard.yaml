@@ -1,0 +1,38 @@
+run:
+  name: smoke_jailguard
+  out_dir: outputs
+  redact: true
+  max_samples: 4
+
+dataset:
+  name: fixtures_smoke
+  params:
+    n_samples: 4
+
+model:
+  backend: dummy
+  model_id: dummy-smoke
+  max_new_tokens: 32
+  temperature: 0.0
+
+nsg:
+  enabled: true
+  baseline_detector:
+    name: allow_all
+    params: {}
+
+detector:
+  name: jailguard
+  params:
+    # CI-safe Policy fan-out: dummy target exercises variant generations without external queries.
+    response_mode: backend
+    max_new_tokens: 4
+    similarity: bow
+    n_variants: 4
+    mutator: PI
+    char_rate: 0.1
+    threshold: 2.0
+
+judge:
+  name: dummy_refusal
+  params: {}

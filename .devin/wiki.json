@@ -1,0 +1,16 @@
+{
+  "repo_notes": [
+    {
+      "content": "Turnkey is a detector-development harness for paired jailbreak-safety evaluation, runtime inspection, and artifact auditing. Explain the end-to-end flow from dataset and attack through target, judge, detector policy, metrics, and audit, and distinguish extension APIs from runtime infrastructure.",
+      "author": "Turnkey maintainers"
+    },
+    {
+      "content": "Treat built-in method integrations as examples of runtime capabilities, not as a research result or leaderboard claim. Preserve the documented distinction between a runnable integration, strict scientific reproduction, and production readiness.",
+      "author": "Turnkey maintainers"
+    },
+    {
+      "content": "Document only committed public source and artifacts. Private prompts, unpublished datasets, internal planning, remote-machine data, and development control-plane material are outside this repository and must not be inferred as product behavior.",
+      "author": "Turnkey maintainers"
+    }
+  ]
+}

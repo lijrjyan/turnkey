@@ -1,0 +1,39 @@
+run:
+  name: smoke_smoothllm
+  out_dir: outputs
+  redact: true
+  max_samples: 1
+
+# Paper-shaped SmoothLLM defense: perturb the target prompt, generate once per
+# copy, majority-vote on refusal labels, and return one majority-class response.
+# Reference: https://arxiv.org/abs/2310.03684
+
+dataset:
+  name: fixtures_smoke
+  params:
+    n_samples: 1
+
+model:
+  backend: dummy
+  model_id: dummy-smoke
+  max_new_tokens: 32
+  temperature: 0.0
+
+nsg:
+  enabled: true
+  baseline_detector:
+    name: allow_all
+    params: {}
+
+detector:
+  name: smoothllm
+  params:
+    pert_type: RandomSwapPerturbation
+    pert_pct: 10
+    num_copies: 3
+    vote_threshold: 0.5
+    seed: 42
+
+judge:
+  name: dummy_refusal
+  params: {}

@@ -1,0 +1,43 @@
+schema_version: turnkey_matrix_spec/v1
+name: example
+
+defaults:
+  run:
+    out_dir: outputs/matrix/example/runs
+    redact: true
+    max_samples: 2
+  content:
+    shuffle: false
+    limit: 2
+  model:
+    backend: dummy
+    model_id: dummy-smoke
+    max_new_tokens: 16
+    temperature: 0.0
+  nsg:
+    enabled: true
+    baseline_detector:
+      name: allow_all
+      params: {}
+  judge:
+    name: dummy_refusal
+    params: {}
+
+datasets:
+  - name: fixtures_smoke
+    params:
+      n_samples: 2
+
+attacks:
+  - name: none
+    params: {}
+
+detectors:
+  - name: allow_all
+    resource_tier: cheap
+    params: {}
+  - name: keyword
+    resource_tier: cheap
+    params:
+      keywords:
+        - UNSAFE_PLACEHOLDER

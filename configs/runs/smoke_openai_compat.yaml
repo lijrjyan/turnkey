@@ -1,0 +1,36 @@
+run:
+  name: smoke-openai-compat
+  out_dir: outputs
+  redact: true
+  max_samples: 4
+
+dataset:
+  name: toy
+  params:
+    n_samples: 4
+
+model:
+  backend: openai_compat
+  # Point this to an OpenAI-compatible server (e.g., vLLM or sglang)
+  base_url: http://127.0.0.1:8000
+  # For local servers you can usually leave OPENAI_API_KEY empty/unset.
+  api_key_env: OPENAI_API_KEY
+  timeout_s: 300
+  model_id: Qwen/Qwen2.5-0.5B-Instruct
+  max_new_tokens: 64
+  temperature: 0.0
+
+nsg:
+  enabled: true
+  baseline_detector:
+    name: allow_all
+    params: {}
+
+detector:
+  name: keyword
+  params:
+    keywords: ["illegal", "wrongdoing"]
+
+judge:
+  name: dummy_refusal
+  params: {}

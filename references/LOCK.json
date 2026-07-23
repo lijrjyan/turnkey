@@ -1,0 +1,386 @@
+{
+  "generated_at": "2026-07-10T18:25:29.300279+00:00",
+  "manifest_path": "references/manifest.yaml",
+  "manifest_sha256": "720813368d0edcd502000d4c8ee699bb531ff0bc09bad0a249dce540551982b2",
+  "papers": {
+    "jailbreakbench_2404_01318": {
+      "url": "https://arxiv.org/pdf/2404.01318.pdf",
+      "path": "references/papers/2404.01318_JailbreakBench.pdf",
+      "sha256": "78c2f251cc101bce36e3dd3138fc0c89f7b73c599099f79ec55318165fe4a981",
+      "title": "JailbreakBench: An Open Robustness Benchmark for Jailbreaking Large Language Models"
+    },
+    "harmbench_2402_04249": {
+      "url": "https://arxiv.org/pdf/2402.04249.pdf",
+      "path": "references/papers/2402.04249_HarmBench.pdf",
+      "sha256": "e6cbcbedbef6aebea3b6fc6c8fd7933546b26cf0a1e65bcf128eea235007c732",
+      "title": "HarmBench: A Standardized Evaluation Framework for Automated Red Teaming and Robust Refusal"
+    },
+    "sorrybench_2406_14598": {
+      "url": "https://arxiv.org/pdf/2406.14598.pdf",
+      "path": "references/papers/2406.14598_SORRY-Bench.pdf",
+      "sha256": "643f5f6a2eddf475777f51503b18c8ecc96618f7242f2bbf8bb52c08e35a6e88",
+      "title": "SORRY-Bench: Systematically Evaluating Large Language Model Safety Refusal Behaviors"
+    },
+    "strongreject_2402_10260": {
+      "url": "https://arxiv.org/pdf/2402.10260.pdf",
+      "path": "references/papers/2402.10260_STRONGREJECT.pdf",
+      "sha256": "10caab98ed5a75b019ef3c8a6697527f83edda067516996d2cb612f02ff746bc",
+      "title": "A STRONGREJECT for Empty Jailbreaks"
+    },
+    "gcg_2307_15043": {
+      "url": "https://arxiv.org/pdf/2307.15043.pdf",
+      "path": "references/papers/2307.15043_GCG.pdf",
+      "sha256": "ab8745c2e3c6dfd939d5a590760bbae4682d92db010947cbb306688ad086bfd1",
+      "title": "Universal and Transferable Adversarial Attacks on Aligned Language Models (GCG)"
+    },
+    "pair_2310_08419": {
+      "url": "https://arxiv.org/pdf/2310.08419.pdf",
+      "path": "references/papers/2310.08419_PAIR.pdf",
+      "sha256": "590bf40aa58061928f54d01b7d53f0d5141bb2ecf4f01483c6849423934f44e4",
+      "title": "Jailbreaking Black Box LLMs in Twenty Queries (PAIR)"
+    },
+    "tap_2312_02119": {
+      "url": "https://arxiv.org/pdf/2312.02119.pdf",
+      "path": "references/papers/2312.02119_TAP.pdf",
+      "sha256": "b0ffafed56bef4937150dcf63ac5379cdc6aeedeac4a83b1af56512d92f9a496",
+      "title": "Tree of Attacks with Pruning (TAP)"
+    },
+    "crescendo_2404_01833": {
+      "url": "https://arxiv.org/pdf/2404.01833.pdf",
+      "path": "references/papers/2404.01833_Crescendo.pdf",
+      "sha256": "a20ef519f1a8f8c224e1bb5a3c42a52991c7aada6ff5d9b5c182a7eb57b893dd",
+      "title": "The Crescendo Multi-Turn LLM Jailbreak Attack"
+    },
+    "manyshot_neurips2024": {
+      "url": "https://proceedings.neurips.cc/paper_files/paper/2024/file/ea456e232efb72d261715e33ce25f208-Paper-Conference.pdf",
+      "path": "references/papers/NeurIPS2024_Many-shot_Jailbreaking.pdf",
+      "sha256": "8c849c12ac96a329b09bf3326bd10e4e0e44d45e1ba697dafc357087f07335c0",
+      "title": "Many-shot Jailbreaking (NeurIPS 2024)"
+    },
+    "deepinception_2311_03191": {
+      "url": "https://arxiv.org/pdf/2311.03191.pdf",
+      "path": "references/papers/2311.03191_DeepInception.pdf",
+      "sha256": "6749fca2b458007f321735549a630192e83773ada659572b4b1e4290f595f2e7",
+      "title": "DeepInception: Hypnotize Large Language Model to Be Jailbreaker"
+    },
+    "persona_modulation_2311_03348": {
+      "url": "https://arxiv.org/pdf/2311.03348.pdf",
+      "path": "references/papers/2311.03348_Persona_Modulation.pdf",
+      "sha256": "0617dcd2f5ac672a91a87abc29292dc4197b2150bd9c22f38f4dbce147b4e60c",
+      "title": "Scalable and Transferable Black-Box Jailbreaks for Language Models via Persona Modulation"
+    },
+    "artprompt_2402_11753": {
+      "url": "https://arxiv.org/pdf/2402.11753.pdf",
+      "path": "references/papers/2402.11753_ArtPrompt.pdf",
+      "sha256": "16bc0a8d90599c880fb39fc6e1de7f50a3382842c8eaac3ed6fd1a37efc45c15",
+      "title": "ArtPrompt: ASCII Art-based Jailbreak Attacks against Aligned LLMs"
+    },
+    "flipattack_2410_02832": {
+      "url": "https://arxiv.org/pdf/2410.02832.pdf",
+      "path": "references/papers/2410.02832_FlipAttack.pdf",
+      "sha256": "8436c8d8c10a5724dadacd38df865c841d5c7a4dba44fe42bc513e8e760881a7",
+      "title": "FlipAttack: Jailbreak LLMs via Flipping"
+    },
+    "llmfuzzer_usenixsec2024": {
+      "url": "https://www.usenix.org/system/files/usenixsecurity24-yu-jiahao.pdf",
+      "path": "references/papers/USENIXSec2024_LLM-Fuzzer.pdf",
+      "sha256": "40f6907fbf561c2ae742a56924fca4b78b081a2e6c13bf3dcc0da4032ac6b82b",
+      "title": "LLM-Fuzzer: Scaling Assessment of Large Language Model Jailbreaks (USENIX Security 2024)"
+    },
+    "visual_adv_2306_13213": {
+      "url": "https://arxiv.org/pdf/2306.13213.pdf",
+      "path": "references/papers/2306.13213_Visual_Adversarial_Examples.pdf",
+      "sha256": "e651ef9944539b513a21a8b7a1b5a62f88b7355a6cce81fde112f57c96c28cf7",
+      "title": "Visual Adversarial Examples Jailbreak Aligned Large Language Models"
+    },
+    "indirect_injection_2307_10490": {
+      "url": "https://arxiv.org/pdf/2307.10490.pdf",
+      "path": "references/papers/2307.10490_Indirect_Injection.pdf",
+      "sha256": "69e88469a3a32b6fedb489ebbb18eaa62d9855736d01c75f4254cdbf0d4f1899",
+      "title": "Abusing Images and Sounds for Indirect Instruction Injection in Multi-Modal LLMs"
+    },
+    "jailbreakv_2404_03027": {
+      "url": "https://arxiv.org/pdf/2404.03027.pdf",
+      "path": "references/papers/2404.03027_JailBreakV.pdf",
+      "sha256": "a9445aef8fdbfca64f5730969378e9391832720729d2b5dc2e7cdf46b7e3d26f",
+      "title": "JailBreakV: A Benchmark for Assessing the Robustness of MultiModal LLMs against Jailbreak Attacks"
+    },
+    "llamaguard_2312_06674": {
+      "url": "https://arxiv.org/pdf/2312.06674.pdf",
+      "path": "references/papers/2312.06674_Llama_Guard.pdf",
+      "sha256": "fc5a3690f3a7771d7c429b6deb73e9e95ac4aa879fce490563c5eeb4f7ad2f33",
+      "title": "Llama Guard: LLM-based Input-Output Safeguard for Human-AI Conversations"
+    },
+    "wildguard_2406_18495": {
+      "url": "https://arxiv.org/pdf/2406.18495.pdf",
+      "path": "references/papers/2406.18495_WildGuard.pdf",
+      "sha256": "cb3619d0e7dea3591b5b6dff3656c05b9b9a96d4a0b3635327fde64015e3ce20",
+      "title": "WildGuard: Open One-Stop Moderation Tools for Safety Risks, Jailbreaks, and Refusals of LLMs"
+    },
+    "guardsafe_2402_13494": {
+      "url": "https://arxiv.org/pdf/2402.13494.pdf",
+      "path": "references/papers/2402.13494_GradSafe.pdf",
+      "sha256": "016435ff0e5fe379caf67c78f4bfeb6e43fd1cccbee9d52d87487e593a8f9a7c",
+      "title": "GradSafe: Detecting Jailbreak Prompts for LLMs via Safety-Critical Gradient Analysis"
+    },
+    "jailguard_2312_10766": {
+      "url": "https://arxiv.org/pdf/2312.10766.pdf",
+      "path": "references/papers/2312.10766_JailGuard.pdf",
+      "sha256": "354e16267a70a1326a403c416692cadb43b8b4511662f10d2c5ffb9d17ae24bf",
+      "title": "JailGuard: A Universal Detection Framework for LLM Prompt-based Attacks"
+    },
+    "fjd_2509_14558": {
+      "url": "https://arxiv.org/pdf/2509.14558.pdf",
+      "path": "references/papers/2509.14558_FJD.pdf",
+      "sha256": "3126da711014bcdfee20b7d7ec2138712dc17b15b73f401ddb104c54b68557af",
+      "title": "LLM Jailbreak Detection for (Almost) Free!"
+    },
+    "guardreasoner_2501_18492": {
+      "url": "https://arxiv.org/pdf/2501.18492.pdf",
+      "path": "references/papers/2501.18492_GuardReasoner.pdf",
+      "sha256": "357114c8918afd51b002410af7ca8325121b5f3a36d4c364a2cb7fbb703ac745",
+      "title": "GuardReasoner: Towards Reasoning-based LLM Safeguards"
+    },
+    "qwen3guard_2510_14276": {
+      "url": "https://arxiv.org/pdf/2510.14276.pdf",
+      "path": "references/papers/2510.14276_Qwen3Guard.pdf",
+      "sha256": "902e79a6fd6537bb6b1bb727917ed0c02c9bf31fdce20e17a2d4eacacf822af3",
+      "title": "Qwen3Guard Technical Report"
+    },
+    "prefix_probing_2512_16650": {
+      "url": "https://arxiv.org/pdf/2512.16650.pdf",
+      "path": "references/papers/2512.16650_Prefix_Probing.pdf",
+      "sha256": "50ca29e64622f96d34edbb9c74fb6dc54ac1a60f6f3a0a76083f712738ccc888",
+      "title": "Prefix Probing: Lightweight Harmful Content Detection for Large Language Models"
+    },
+    "smoothllm_2310_03684": {
+      "url": "https://arxiv.org/pdf/2310.03684.pdf",
+      "path": "references/papers/2310.03684_SmoothLLM.pdf",
+      "sha256": "1a34863cbec66628ca4abdaee9ca03a1473879496d42716788e018b6ca9aecfb",
+      "title": "SmoothLLM: Defending Large Language Models Against Jailbreaking Attacks"
+    },
+    "erase_check_2309_02705": {
+      "url": "https://arxiv.org/pdf/2309.02705.pdf",
+      "path": "references/papers/2309.02705_Erase-and-Check.pdf",
+      "sha256": "b9089003dc887576755bc8ab55b924fd2d2affaecf0bec59922b1e74680d055b",
+      "title": "Certifying LLM Safety against Adversarial Prompting (Erase-and-Check)"
+    },
+    "threat_model_2410_16222": {
+      "url": "https://arxiv.org/pdf/2410.16222.pdf",
+      "path": "references/papers/2410.16222_Threat_Model.pdf",
+      "sha256": "07143b4d67aa178b0823c71c18043a2325aabb8f79cd800b033ada2dfdc16aa2",
+      "title": "A Realistic Threat Model for Large Language Model Jailbreaks"
+    },
+    "adashield_2403_09513": {
+      "url": "https://arxiv.org/pdf/2403.09513.pdf",
+      "path": "references/papers/2403.09513_AdaShield.pdf",
+      "sha256": "bf4ee4a981287dc9146d34ea6a31ddb9972f80561d8407ea110a43087033b911",
+      "title": "AdaShield: Safeguarding Multimodal Large Language Models from Structure-based Attack via Adaptive Shield Prompting"
+    },
+    "figstep_aaai2025": {
+      "url": "https://ojs.aaai.org/index.php/AAAI/article/download/34568/36723",
+      "path": "references/papers/AAAI2025_FigStep.pdf",
+      "sha256": "a54dbeb5bcccf5627b8362533615520de311d257cac1008530c46ee9f83d623f",
+      "title": "FigStep: Jailbreaking Large Vision-Language Models via Typographic Prompts (AAAI 2025)"
+    },
+    "agent_smith_2402_08567": {
+      "url": "https://arxiv.org/pdf/2402.08567.pdf",
+      "path": "references/papers/2402.08567_Agent_Smith.pdf",
+      "sha256": "da15a4594ec3bc707846f6c0b9cd71b4ba76ed840d934f3f87aa78618c86fcb6",
+      "title": "Agent Smith: A Single Image Can Jailbreak One Million Multimodal LLM Agents Exponentially Fast"
+    },
+    "prisonbreak_2412_07192": {
+      "url": "https://arxiv.org/pdf/2412.07192.pdf",
+      "path": "references/papers/2412.07192_PrisonBreak.pdf",
+      "sha256": "4a2c8f696a95504d77a77037326469f334e25fd7996f442c0669f95f69486cf8",
+      "title": "PrisonBreak: Jailbreaking Large Language Models with Fewer Than Twenty-Five Targeted Bit-flips"
+    }
+  },
+  "repos": {
+    "llm_attacks": {
+      "url": "https://github.com/llm-attacks/llm-attacks.git",
+      "path": "references/repos/llm-attacks",
+      "requested_commit": "098262edf85f807224e70ecd87b9d83716bf6b73",
+      "resolved_commit": "098262edf85f807224e70ecd87b9d83716bf6b73",
+      "head": "098262edf85f807224e70ecd87b9d83716bf6b73",
+      "depth": 1
+    },
+    "jailbreak_llms_pair": {
+      "url": "https://github.com/patrickrchao/JailbreakingLLMs.git",
+      "path": "references/repos/JailbreakingLLMs",
+      "requested_commit": "6379ef705a0fc745530f7d895963510c021b496a",
+      "resolved_commit": "6379ef705a0fc745530f7d895963510c021b496a",
+      "head": "6379ef705a0fc745530f7d895963510c021b496a",
+      "depth": 1
+    },
+    "tap": {
+      "url": "https://github.com/RICommunity/TAP.git",
+      "path": "references/repos/TAP",
+      "requested_commit": "7bcdad30537c679d00699fac16052dc916c89a6d",
+      "resolved_commit": "7bcdad30537c679d00699fac16052dc916c89a6d",
+      "head": "7bcdad30537c679d00699fac16052dc916c89a6d",
+      "depth": 1
+    },
+    "deepinception": {
+      "url": "https://github.com/tmlr-group/DeepInception.git",
+      "path": "references/repos/DeepInception",
+      "requested_commit": "fc5689e76c4dd87a14babf1eadf890532f2b6880",
+      "resolved_commit": "fc5689e76c4dd87a14babf1eadf890532f2b6880",
+      "head": "fc5689e76c4dd87a14babf1eadf890532f2b6880",
+      "depth": 1
+    },
+    "artprompt": {
+      "url": "https://github.com/uw-nsl/ArtPrompt.git",
+      "path": "references/repos/ArtPrompt",
+      "requested_commit": "6eb866446b7648ccee705bd802fe3ae8694ffc12",
+      "resolved_commit": "6eb866446b7648ccee705bd802fe3ae8694ffc12",
+      "head": "6eb866446b7648ccee705bd802fe3ae8694ffc12",
+      "depth": 1
+    },
+    "flipattack": {
+      "url": "https://github.com/yueliu1999/FlipAttack.git",
+      "path": "references/repos/FlipAttack",
+      "requested_commit": "04627cf0e20f6adcdd4f3e6d11e910aa79309a9a",
+      "resolved_commit": "04627cf0e20f6adcdd4f3e6d11e910aa79309a9a",
+      "head": "04627cf0e20f6adcdd4f3e6d11e910aa79309a9a",
+      "depth": 1
+    },
+    "gptfuzz_llm_fuzzer": {
+      "url": "https://github.com/sherdencooper/GPTFuzz.git",
+      "path": "references/repos/GPTFuzz",
+      "requested_commit": "0c26cccc3b19cd5eed91d6cb6912431cf2501762",
+      "resolved_commit": "0c26cccc3b19cd5eed91d6cb6912431cf2501762",
+      "head": "0c26cccc3b19cd5eed91d6cb6912431cf2501762",
+      "depth": 1
+    },
+    "visual_adv_jailbreak": {
+      "url": "https://github.com/Unispac/Visual-Adversarial-Examples-Jailbreak-Large-Language-Models.git",
+      "path": "references/repos/Visual-Adversarial-Examples-Jailbreak-Large-Language-Models",
+      "requested_commit": "5fc9883cfa9b4183cf05c6eceef49e449e45e9c9",
+      "resolved_commit": "5fc9883cfa9b4183cf05c6eceef49e449e45e9c9",
+      "head": "5fc9883cfa9b4183cf05c6eceef49e449e45e9c9",
+      "depth": 1
+    },
+    "figstep": {
+      "url": "https://github.com/CryptoAILab/FigStep.git",
+      "path": "references/repos/FigStep",
+      "requested_commit": "0861b17b3d67887c06ee3534ec65b3012f9becb7",
+      "resolved_commit": "0861b17b3d67887c06ee3534ec65b3012f9becb7",
+      "head": "0861b17b3d67887c06ee3534ec65b3012f9becb7",
+      "depth": 1
+    },
+    "agent_smith": {
+      "url": "https://github.com/sail-sg/Agent-Smith.git",
+      "path": "references/repos/Agent-Smith",
+      "requested_commit": "3e19605cbf05067b923b07f1f594f2505cbddcd3",
+      "resolved_commit": "3e19605cbf05067b923b07f1f594f2505cbddcd3",
+      "head": "3e19605cbf05067b923b07f1f594f2505cbddcd3",
+      "depth": 1
+    },
+    "strongreject": {
+      "url": "https://github.com/alexandrasouly/strongreject.git",
+      "path": "references/repos/strongreject",
+      "requested_commit": "f7cad6c17e624e21d8df2278e918ae1dddb4cb56",
+      "resolved_commit": "f7cad6c17e624e21d8df2278e918ae1dddb4cb56",
+      "head": "f7cad6c17e624e21d8df2278e918ae1dddb4cb56",
+      "depth": 1
+    },
+    "strong_reject": {
+      "url": "https://github.com/dsbowen/strong_reject.git",
+      "path": "references/repos/strong_reject",
+      "requested_commit": "7a551d5b440ec7b75d4f6f5bb7c1719965b76b47",
+      "resolved_commit": "7a551d5b440ec7b75d4f6f5bb7c1719965b76b47",
+      "head": "7a551d5b440ec7b75d4f6f5bb7c1719965b76b47",
+      "depth": 1
+    },
+    "gradsafe": {
+      "url": "https://github.com/xyq7/GradSafe.git",
+      "path": "references/repos/GradSafe",
+      "requested_commit": "2a8b6edd213ed8931b300f7270887227a8e880be",
+      "resolved_commit": "2a8b6edd213ed8931b300f7270887227a8e880be",
+      "head": "2a8b6edd213ed8931b300f7270887227a8e880be",
+      "depth": 1
+    },
+    "jailguard": {
+      "url": "https://github.com/shiningrain/JailGuard.git",
+      "path": "references/repos/JailGuard",
+      "requested_commit": "419e1d3d08f4d02998a11a687f925518d2d5dd0c",
+      "resolved_commit": "419e1d3d08f4d02998a11a687f925518d2d5dd0c",
+      "head": "419e1d3d08f4d02998a11a687f925518d2d5dd0c",
+      "depth": 1
+    },
+    "smooth_llm": {
+      "url": "https://github.com/arobey1/smooth-llm.git",
+      "path": "references/repos/smooth-llm",
+      "requested_commit": "1855c8791d4ffbcd902abcdd1b5ef69fda1a96e0",
+      "resolved_commit": "1855c8791d4ffbcd902abcdd1b5ef69fda1a96e0",
+      "head": "1855c8791d4ffbcd902abcdd1b5ef69fda1a96e0",
+      "depth": 1
+    },
+    "certified_llm_safety": {
+      "url": "https://github.com/aounon/certified-llm-safety.git",
+      "path": "references/repos/certified-llm-safety",
+      "requested_commit": "585385ae21fc4cc4f48d2c54180a72f92fdd292f",
+      "resolved_commit": "585385ae21fc4cc4f48d2c54180a72f92fdd292f",
+      "head": "585385ae21fc4cc4f48d2c54180a72f92fdd292f",
+      "depth": 1
+    },
+    "llm_threat_model": {
+      "url": "https://github.com/valentyn1boreiko/llm-threat-model.git",
+      "path": "references/repos/llm-threat-model",
+      "requested_commit": "ab775a74627469346d08d6cba88a6f48c1017824",
+      "resolved_commit": "ab775a74627469346d08d6cba88a6f48c1017824",
+      "head": "ab775a74627469346d08d6cba88a6f48c1017824",
+      "depth": 1
+    },
+    "adashield": {
+      "url": "https://github.com/rain305f/adashield.git",
+      "path": "references/repos/adashield",
+      "requested_commit": "b6d02c6747bd6984a99ee2e1db1e52736a6a05cc",
+      "resolved_commit": "b6d02c6747bd6984a99ee2e1db1e52736a6a05cc",
+      "head": "b6d02c6747bd6984a99ee2e1db1e52736a6a05cc",
+      "depth": 1
+    },
+    "guardreasoner": {
+      "url": "https://github.com/yueliu1999/GuardReasoner.git",
+      "path": "references/repos/GuardReasoner",
+      "requested_commit": "bb7e686dc0535884d6994de5f950a072772e7fe2",
+      "resolved_commit": "bb7e686dc0535884d6994de5f950a072772e7fe2",
+      "head": "bb7e686dc0535884d6994de5f950a072772e7fe2",
+      "depth": 1
+    },
+    "qwen3guard": {
+      "url": "https://github.com/QwenLM/Qwen3Guard.git",
+      "path": "references/repos/Qwen3Guard",
+      "requested_commit": "6a52eca94b3d2aedb8aebd36baa353828d4166f1",
+      "resolved_commit": "6a52eca94b3d2aedb8aebd36baa353828d4166f1",
+      "head": "6a52eca94b3d2aedb8aebd36baa353828d4166f1",
+      "depth": 1
+    },
+    "wildguard_github": {
+      "url": "https://github.com/allenai/wildguard.git",
+      "path": "references/repos/wildguard",
+      "requested_commit": "495b9dc837be594c6c5665b0f7f56169baf0d5be",
+      "resolved_commit": "495b9dc837be594c6c5665b0f7f56169baf0d5be",
+      "head": "495b9dc837be594c6c5665b0f7f56169baf0d5be",
+      "depth": 1
+    },
+    "vllm": {
+      "url": "https://github.com/vllm-project/vllm.git",
+      "path": "references/repos/vllm",
+      "requested_commit": "5dc3538736e40428d388f6980025340f4f7524af",
+      "resolved_commit": "5dc3538736e40428d388f6980025340f4f7524af",
+      "head": "5dc3538736e40428d388f6980025340f4f7524af",
+      "depth": 1
+    },
+    "sglang": {
+      "url": "https://github.com/sgl-project/sglang.git",
+      "path": "references/repos/sglang",
+      "requested_commit": "17119a697de72910d77d3bfffc34d097cf6cad09",
+      "resolved_commit": "17119a697de72910d77d3bfffc34d097cf6cad09",
+      "head": "17119a697de72910d77d3bfffc34d097cf6cad09",
+      "depth": 1
+    }
+  },
+  "errors": []
+}

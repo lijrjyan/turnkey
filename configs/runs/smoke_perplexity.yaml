@@ -1,0 +1,32 @@
+run:
+  name: smoke-perplexity
+  out_dir: outputs
+  redact: true
+  max_samples: 4
+
+dataset:
+  name: fixtures_smoke@v1
+  params:
+    n_samples: 4
+
+model:
+  backend: dummy
+  model_id: dummy-smoke
+  max_new_tokens: 32
+  temperature: 0.0
+  return_prompt_logprobs: true
+
+nsg:
+  enabled: true
+  baseline_detector:
+    name: allow_all
+    params: {}
+
+detector:
+  name: perplexity
+  params:
+    threshold: 100.0
+
+judge:
+  name: dummy_refusal
+  params: {}

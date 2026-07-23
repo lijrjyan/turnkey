@@ -1,0 +1,34 @@
+run:
+  name: xstest-smoke
+  out_dir: outputs
+  redact: true
+
+dataset:
+  name: xstest
+  params:
+    revision: 365e837dfc84a6e21883c99acf631b5f8c345479
+    shuffle: true
+    seed: 0
+    benign_limit: 2
+    harmful_limit: 2
+    split: validation
+
+model:
+  backend: dummy
+  model_id: dummy-smoke
+  max_new_tokens: 32
+  temperature: 0.0
+
+nsg:
+  enabled: true
+  baseline_detector:
+    name: allow_all
+    params: {}
+
+detector:
+  name: allow_all
+  params: {}
+
+judge:
+  name: dummy_refusal
+  params: {}

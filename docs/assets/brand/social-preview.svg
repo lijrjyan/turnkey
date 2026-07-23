@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 640" width="1280" height="640">
+  <rect width="1280" height="640" fill="#16202c"/>
+  <g transform="translate(149,94) scale(3)">
+  <g fill="#d99a2b">
+    <rect x="34" y="40" width="232" height="7" rx="3.5"/>
+    <rect x="48" y="40" width="8" height="48" rx="3.5"/>
+    <rect x="79.5" y="43.5" width="7" height="24" rx="3"/>
+  </g>
+  <circle cx="278" cy="43.5" r="12" fill="none" stroke="#d99a2b" stroke-width="7"/>
+  <g stroke="#f2ede2" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" fill="none">
+    <path transform="translate(72,62)" d="M0 0 V11 A11 11 0 0 0 22 11 V0"/>
+    <path transform="translate(106,62)" d="M0 0 V22 M0 13 A13 13 0 0 1 17 2"/>
+    <path transform="translate(135,62)" d="M0 22 V11 A11 11 0 0 1 22 11 V22"/>
+    <path transform="translate(169,62)" d="M0 -14 V22 M13 0 L0 12 M6 6.5 L14 22"/>
+    <path transform="translate(195,62)" d="M0 11 H22 M22 11 A11 11 0 1 0 18.8 18.8"/>
+    <path transform="translate(229,62)" d="M0 0 V11 A11 11 0 0 0 22 11 V0 M22 0 V26 A10 10 0 0 1 4 31.5"/>
+  </g>
+  <rect x="165" y="43.5" width="8" height="16.5" rx="3.5" fill="#d99a2b"/>
+  </g>
+  <g transform="translate(149,94) scale(3)" font-family="DejaVu Sans, Arial, sans-serif">
+    <text x="72" y="118" font-size="10.5" letter-spacing="3" fill="#8fa0b5">BRING YOUR OWN DETECTOR</text>
+  </g>
+</svg>

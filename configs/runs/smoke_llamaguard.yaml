@@ -1,0 +1,37 @@
+run:
+  name: smoke_llamaguard
+  out_dir: outputs
+  redact: true
+  max_samples: 4
+
+dataset:
+  name: fixtures_smoke
+  params:
+    n_samples: 4
+
+model:
+  backend: dummy
+  model_id: dummy-smoke
+  max_new_tokens: 32
+  temperature: 0.0
+
+nsg:
+  enabled: true
+  baseline_detector:
+    name: allow_all
+    params: {}
+
+detector:
+  name: keyword
+  params:
+    keywords: ["UNSAFE_PLACEHOLDER"]
+
+judge:
+  name: llamaguard
+  params:
+    model_id: meta-llama/Llama-Guard-3-1B
+    revision: acf7aafa60f0410f8f42b1fa35e077d705892029
+    device: auto
+    torch_dtype: auto
+    max_new_tokens: 32
+    token_env: HF_TOKEN

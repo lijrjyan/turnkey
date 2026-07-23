@@ -1,0 +1,28 @@
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.ruff_cache/
+*.egg-info/
+
+# Local run artifacts
+/outputs/
+/runs/
+/artifacts/
+/dist/
+/build/
+/.rd_queue/
+/docs/superpowers/
+
+# Local refactor working records (detailed plans stay out of commits)
+/task_plan.md
+/findings.md
+/progress.md
+
+# HF / model caches (optional)
+/.cache/
+
+# References are fetched locally (manifest + lock are tracked)
+/references/papers/
+/references/repos/
+/references/tmp/

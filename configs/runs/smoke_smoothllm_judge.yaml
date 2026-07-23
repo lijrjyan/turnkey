@@ -1,0 +1,44 @@
+run:
+  name: smoke_smoothllm_judge
+  out_dir: outputs
+  redact: true
+  max_samples: 1
+
+# Non-paper compatibility experiment: perturb judge inputs and vote over one
+# unchanged target response. Use smoke_smoothllm.yaml for the target-side defense.
+dataset:
+  name: fixtures_smoke
+  params:
+    n_samples: 1
+
+model:
+  backend: dummy
+  model_id: dummy-smoke
+  max_new_tokens: 32
+  temperature: 0.0
+
+nsg:
+  enabled: true
+  baseline_detector:
+    name: allow_all
+    params: {}
+
+detector:
+  name: allow_all
+  params: {}
+
+judge:
+  name: smoothllm
+  params:
+    base_judge_config:
+      name: qwen3guard
+      params:
+        model_size: "0.6B"
+        revision: fada3b2f655b89601929198343c94cd2f64d93cc
+        device: "cuda"
+        torch_dtype: "auto"
+    pert_type: RandomSwapPerturbation
+    pert_pct: 10
+    num_copies: 3
+    vote_threshold: 0.5
+    seed: 42
