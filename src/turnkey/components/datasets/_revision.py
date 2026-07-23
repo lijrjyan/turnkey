@@ -27,19 +27,23 @@ def resolve_loaded_dataset_revision(
 
     if requested_commit is not None:
         for revisions in revisions_by_dataset:
-            if not revisions:
+            if revisions is not None and not revisions:
                 raise ValueError(
                     "could not resolve the requested immutable dataset revision "
                     "from loaded dataset metadata"
                 )
 
-    revisions = set().union(*revisions_by_dataset) if revisions_by_dataset else set()
+    known = [revisions for revisions in revisions_by_dataset if revisions is not None]
+    revisions = set().union(*known) if known else set()
     if len(revisions) > 1:
         raise ValueError(
             "loaded dataset metadata resolved to multiple revisions: " + ", ".join(sorted(revisions))
         )
     if not revisions:
-        return None
+        # `datasets` >= 4 no longer records download_checksums, so there is no
+        # in-band metadata to cross-check. The loader passed the immutable
+        # revision to load_dataset, which fetches exactly that commit.
+        return requested_commit
 
     resolved = next(iter(revisions))
     if requested_commit is not None and resolved != requested_commit:
@@ -49,11 +53,16 @@ def resolve_loaded_dataset_revision(
     return resolved
 
 
-def _metadata_revisions(dataset: object) -> set[str]:
+def _metadata_revisions(dataset: object) -> set[str] | None:
+    """Revisions recorded in dataset metadata, or None when metadata is absent.
+
+    `datasets` >= 4 returns download_checksums=None, which is "no metadata"
+    rather than "metadata that failed to resolve".
+    """
     info = getattr(dataset, "info", None)
     checksums = getattr(info, "download_checksums", None)
     if not isinstance(checksums, Mapping):
-        return set()
+        return None
     return {
         revision
         for value in checksums

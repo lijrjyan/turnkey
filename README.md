@@ -1,7 +1,8 @@
 <div align="center">
-  <img src="docs/assets/turnkey-mark.svg" alt="Turnkey logo" width="112">
-
-  <h1>Turnkey</h1>
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="docs/assets/brand/logo-on-dark.svg">
+    <img src="docs/assets/brand/logo-on-light.svg" alt="Turnkey" width="420">
+  </picture>
 
   <p><strong>Bring Your Own Detector.</strong></p>
   <p>A development and debugging harness for jailbreak detectors, guards, and model-side safety policies.</p>
@@ -19,8 +20,8 @@
 
 <p align="center">
   <a href="#quick-start"><b>Quick Start</b></a> |
-  <a href="docs/get-started/installation.md"><b>Documentation</b></a> |
-  <a href="docs/notebooks/"><b>Notebooks</b></a> |
+  <a href="https://lijrjyan.github.io/turnkey-site/"><b>Documentation</b></a> |
+  <a href="https://lijrjyan.github.io/turnkey-site/learn/"><b>Notebooks</b></a> |
   <a href="examples/"><b>Examples</b></a> |
   <a href="https://deepwiki.com/lijrjyan/turnkey"><b>Ask DeepWiki</b></a> |
   <a href="#community--support"><b>Community</b></a>
@@ -60,9 +61,8 @@ dataset -> attack -> target -> judge -> detector policy -> metrics -> audit
 
 ## Quick Start
 
-The supported preview is currently installed from source. The `turnkey` name
-on [PyPI](https://pypi.org/project/turnkey/) is reserved at `0.0.1`; it is not
-yet the functional `0.1.0` source preview documented here.
+Install the packaged release from [PyPI](https://pypi.org/project/turnkey/)
+with `pip install turnkey`, or install from source for development.
 
 ```bash
 git clone https://github.com/lijrjyan/turnkey.git
@@ -100,6 +100,20 @@ cd my-detector
 uv run turnkey dev ./detector.py:build --max-samples 4
 ```
 
+### Docker
+
+Run the same CPU smoke with nothing installed but Docker:
+
+```bash
+docker build -t turnkey https://github.com/lijrjyan/turnkey.git
+docker run --rm -v "$PWD/outputs:/app/outputs" turnkey
+```
+
+The default command runs `configs/runs/smoke.yaml` and writes the four core
+artifacts under `outputs/`. Any CLI invocation works the same way, for example
+`docker run --rm turnkey detector list`. For GPU-backed HF models, build the
+large image with `--target full` and run with `--gpus all`.
+
 ## Included Method Examples
 
 Turnkey includes compact integrations that exercise different runtime
@@ -128,15 +142,15 @@ Choose the shortest path for what you are trying to do:
 
 | Goal | Guide |
 | --- | --- |
-| Install and verify the source checkout | [Installation](docs/get-started/installation.md) |
-| Complete the first run-to-audit loop | [Ten-minute quickstart](docs/get-started/quickstart.md) |
-| Add a detector without changing Turnkey | [Build an external detector](docs/guides/build-a-detector.md) |
-| Trace a missed or overblocked case | [Debug a run](docs/guides/debug-a-run.md) |
-| Understand policies and model signals | [Runtime concepts](docs/concepts/runtime.md) |
-| Compare model-based safety filters | [Model-based filters](docs/guides/model_based_filters.md) |
-| Learn the public artifact contract | [Artifact concepts](docs/concepts/artifacts.md) |
-| Use the command line precisely | [CLI reference](docs/reference/cli.md) |
-| Learn interactively | [Executable notebooks](docs/notebooks/) |
+| Install and verify the source checkout | [Installation](https://lijrjyan.github.io/turnkey-site/start/install/) |
+| Complete the first run-to-audit loop | [Ten-minute quickstart](https://lijrjyan.github.io/turnkey-site/learn/quickstart/) |
+| Add a detector without changing Turnkey | [Build an external detector](https://lijrjyan.github.io/turnkey-site/learn/build-your-own-detector/) |
+| Trace a missed or overblocked case | [Debug a run](https://lijrjyan.github.io/turnkey-site/learn/debug-a-missed-case/) |
+| Understand policies and model signals | [Runtime concepts](https://lijrjyan.github.io/turnkey-site/concepts/system-model/) |
+| Compare model-based safety filters | [Model-based filters](https://lijrjyan.github.io/turnkey-site/concepts/detector-signals/) |
+| Learn the public artifact contract | [Artifact concepts](https://lijrjyan.github.io/turnkey-site/concepts/artifacts-and-audit/) |
+| Use the command line precisely | [CLI reference](https://lijrjyan.github.io/turnkey-site/reference/cli/) |
+| Learn interactively | [Executable notebooks](https://lijrjyan.github.io/turnkey-site/learn/) |
 
 Build the complete local documentation site with:
 

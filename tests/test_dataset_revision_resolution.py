@@ -137,6 +137,21 @@ def test_input_provider_rejects_unresolved_immutable_dataset_revision(
         materialize_input_provider(_xstest_config(revision=_RESOLVED_REVISION))
 
 
+def test_input_provider_trusts_pinned_revision_without_checksum_metadata(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    dataset = _FakeDataset(
+        [{"instructions": "Benign request.", "clf_label": 0}],
+        revision=_RESOLVED_REVISION,
+    )
+    dataset.info.download_checksums = None  # datasets >= 4 records no checksums
+    monkeypatch.setattr(xstest, "_import_datasets", lambda: lambda *args, **kwargs: dataset)
+
+    bundle = materialize_input_provider(_xstest_config(revision=_RESOLVED_REVISION))
+
+    assert bundle.resolved_dataset_revision == _RESOLVED_REVISION
+
+
 def test_local_dataset_has_no_resolved_external_revision() -> None:
     bundle = materialize_input_provider(
         Config(

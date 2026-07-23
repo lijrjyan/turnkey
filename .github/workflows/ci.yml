@@ -3,7 +3,9 @@ name: ci
 on:
   push:
     branches: [dev, main]
+    tags: ["v*"]
   pull_request:
+    types: [opened, synchronize, reopened, ready_for_review, labeled]
   workflow_dispatch:
 
 permissions:
@@ -14,6 +16,27 @@ concurrency:
   cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 jobs:
+  # Heavy lanes are opt-in, sglang-style: they run on version tags, pushes to
+  # main, manual dispatch, or pull requests carrying the `run-ci` label.
+  # Regular dev pushes and unlabeled PRs only run the light lanes.
+  gate:
+    runs-on: ubuntu-latest
+    steps:
+      - id: decide
+        run: |
+          heavy=false
+          case "${{ github.event_name }}" in
+            workflow_dispatch) heavy=true ;;
+            push)
+              if [ "${{ startsWith(github.ref, 'refs/tags/') }}" = "true" ] \
+                || [ "${{ github.ref_name }}" = "main" ]; then heavy=true; fi ;;
+            pull_request)
+              if [ "${{ contains(github.event.pull_request.labels.*.name, 'run-ci') }}" = "true" ]; then heavy=true; fi ;;
+          esac
+          echo "heavy=$heavy" >> "$GITHUB_OUTPUT"
+    outputs:
+      heavy: ${{ steps.decide.outputs.heavy }}
+
   changes:
     if: github.event_name != 'schedule'
     runs-on: ubuntu-latest
@@ -160,6 +183,8 @@ jobs:
           tests/ci/test_run_trace_smoke.py
 
   trace-smoke-audit:
+    needs: gate
+    if: needs.gate.outputs.heavy == 'true'
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -184,6 +209,8 @@ jobs:
           --out-root outputs/ci-trace-smoke
 
   matrix-plan:
+    needs: gate
+    if: needs.gate.outputs.heavy == 'true'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
@@ -198,6 +225,8 @@ jobs:
         run: uv run python scripts/ci/check_matrix_plan.py --out-root outputs/ci-matrix-plan
 
   openai-compat-fake:
+    needs: gate
+    if: needs.gate.outputs.heavy == 'true'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
@@ -241,8 +270,8 @@ jobs:
           fi
 
   targeted-smokes:
-    if: github.event_name != 'schedule'
-    needs: changes
+    needs: [changes, gate]
+    if: github.event_name != 'schedule' && needs.gate.outputs.heavy == 'true'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
@@ -252,7 +281,7 @@ jobs:
           version: "0.9.9"
           enable-cache: true
       - name: Install dependencies
-        run: uv sync --frozen --extra dev
+        run: uv sync --frozen --extra dev --extra hf
       - name: RCS smoke
         if: needs.changes.outputs.detector_rcs == 'true'
         run: >-

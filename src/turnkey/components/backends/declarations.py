@@ -36,6 +36,7 @@ def _build_hf(cfg: ModelConfig) -> LLMBackend:
         revision=cfg.revision,
         device=cfg.device,
         trust_remote_code=cfg.trust_remote_code,
+        use_chat_template=cfg.use_chat_template,
     )
 
 

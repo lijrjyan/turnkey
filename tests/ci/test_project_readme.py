@@ -5,21 +5,23 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
 
+# Internal development-control machinery stays workspace-only. Community-facing
+# governance docs (CONTRIBUTING, SECURITY, issue templates, ...) were promoted
+# into the repository for the public launch on 2026-07-22.
 WORKSPACE_ONLY_FILES = (
     "AGENTS.md",
+    ".githooks",
+    "scripts/install-git-hooks.sh",
+)
+
+REQUIRED_GOVERNANCE_FILES = (
     "CHANGELOG.md",
+    "CITATION.cff",
     "CODE_OF_CONDUCT.md",
     "CONTRIBUTING.md",
-    "GOVERNANCE.md",
-    "RELEASING.md",
     "SECURITY.md",
-    "SUPPORT.md",
-    ".githooks",
-    ".github/CODEOWNERS",
-    ".github/dependabot.yml",
     ".github/ISSUE_TEMPLATE",
     ".github/PULL_REQUEST_TEMPLATE.md",
-    "scripts/install-git-hooks.sh",
 )
 
 
@@ -74,6 +76,11 @@ def test_repository_level_docs_are_intentionally_minimal() -> None:
     for relative_path in WORKSPACE_ONLY_FILES:
         assert not (ROOT / relative_path).exists(), (
             f"workspace-only material leaked into product repository: {relative_path}"
+        )
+
+    for relative_path in REQUIRED_GOVERNANCE_FILES:
+        assert (ROOT / relative_path).exists(), (
+            f"community governance file missing from product repository: {relative_path}"
         )
 
 

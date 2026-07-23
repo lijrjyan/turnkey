@@ -97,6 +97,10 @@ class ModelConfig:
     # generation
     max_new_tokens: int = 96
     temperature: float = 0.0
+    # Render target-generation prompts through the tokenizer chat template
+    # (hf backend only; openai_compat chat endpoints template server-side).
+    # Method signals keep measuring the raw prompt text.
+    use_chat_template: bool = False
 
     # optional model-side signals
     return_prompt_logprobs: bool = False

@@ -24,6 +24,7 @@ class HFBackend(LLMBackend):
     revision: str | None = None
     device: str = "auto"
     trust_remote_code: bool = False
+    use_chat_template: bool = False
 
     def __post_init__(self) -> None:
         AutoModelForCausalLM, AutoTokenizer = _import_hf()
@@ -177,6 +178,25 @@ class HFBackend(LLMBackend):
             logprob_avg=logprob_avg,
         )
 
+    def _render_generation_prompt(self, prompt: str) -> str:
+        """Render the target-generation prompt through the model's chat template.
+
+        Method signals (prompt/prefix logprobs, hidden states, gradients) keep
+        measuring the raw prompt text; only target generation is affected.
+        """
+        if not self.use_chat_template:
+            return prompt
+        if not getattr(self._tokenizer, "chat_template", None):
+            raise ValueError(
+                f"hf backend: `{self.model_id}` has no tokenizer chat template; "
+                "set model.use_chat_template: false or pick an instruct model"
+            )
+        return self._tokenizer.apply_chat_template(
+            [{"role": "user", "content": prompt}],
+            tokenize=False,
+            add_generation_prompt=True,
+        )
+
     def generate(
         self,
         *,
@@ -190,7 +210,7 @@ class HFBackend(LLMBackend):
         self._ensure_text_only(images)
 
         t0 = time.time()
-        inputs = self._tokenizer(prompt, return_tensors="pt")
+        inputs = self._tokenizer(self._render_generation_prompt(prompt), return_tensors="pt")
         input_ids = inputs["input_ids"].to(self._device)
         attention_mask = inputs.get("attention_mask")
         if attention_mask is not None:
@@ -248,7 +268,8 @@ class HFBackend(LLMBackend):
         old_padding_side = getattr(self._tokenizer, "padding_side", "right")
         self._tokenizer.padding_side = "left"
         try:
-            inputs = self._tokenizer(list(prompts), return_tensors="pt", padding=True)
+            rendered = [self._render_generation_prompt(prompt) for prompt in prompts]
+            inputs = self._tokenizer(rendered, return_tensors="pt", padding=True)
         finally:
             self._tokenizer.padding_side = old_padding_side
 
