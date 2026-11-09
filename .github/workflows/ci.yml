@@ -51,7 +51,7 @@ jobs:
       matrix: ${{ steps.filter.outputs.matrix }}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-      - uses: dorny/paths-filter@6852f92c20ea7fd3b0c25de3b5112db3a98da050 # v3
+      - uses: dorny/paths-filter@f3360c560367c9daf72b88c0e6164162034c5721 # v3
         id: filter
         with:
           filters: |
